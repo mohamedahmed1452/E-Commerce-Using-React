@@ -1,9 +1,13 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  let navigate = useNavigate();
+  let [errorMessage, setErrorMessage] = useState(null);
+  let [successMessage, setSuccessMessage] = useState(null);
+
   const user = {
     name: "",
     email: "",
@@ -12,17 +16,24 @@ export default function Register() {
     rePassword: "",
   };
 
-  async function registerSubmit(values) {
-    await axios
+  function registerSubmit(values) {
+    axios
       .post("https://ecommerce.routemisr.com/api/v1/auth/signup", values)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err.response.data.message));
-    setTimeout(() => {
-      Navigate("/login");
-    }, 2000);
+      .then((res) => {
+        setSuccessMessage(res.data.message);
+        setTimeout(() => {
+          setSuccessMessage(null);
+          navigate("login");
+        }, 2000);
+      })
+      .catch((err) => {
+        setErrorMessage(err.response.data.message);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 2000);
+      });
   }
-
-  function validateErrors(values) {
+  function validate_errors(values) {
     let errors = {};
     const nameRegex = /^[A-Z ][a-z]{4,}$/;
     if (!nameRegex.test(values.name)) {
@@ -49,16 +60,32 @@ export default function Register() {
 
     return errors;
   }
+
   const registerFormic = useFormik({
     initialValues: user,
     onSubmit: registerSubmit,
-    validate: validateErrors,
+    validate: validate_errors,
   });
 
   return (
     <>
       <div className="container mx-auto py-10 mt-6 h-[88vh] ">
-        <h1 className="text-center">Register Now</h1>
+        <h1 className="text-center font-bold">Register Now</h1>
+        {errorMessage ? (
+          <div
+            className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 w-[35%] mx-auto mt-6"
+            role="alert"
+          >
+            <span className="font-medium">Danger alert!</span> {errorMessage}
+          </div>
+        ) : successMessage ? (
+          <div
+            class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 mx-auto mt-6 dark:bg-gray-800 dark:text-green-400 w-[35%] "
+            role="alert"
+          >
+            <span class="font-medium">Success alert!</span> Congratulation
+          </div>
+        ) : null}
         <form
           className="max-w-md mx-auto "
           onSubmit={registerFormic.handleSubmit}
