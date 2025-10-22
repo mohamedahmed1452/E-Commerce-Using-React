@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@import "flowbite/src/themes/default";
+
+/* Global styles below */
+
+.active{
+  border-bottom: solid 3px #fff;
+}
+
+
