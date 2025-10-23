@@ -1,28 +1,30 @@
-import React from "react";
-import { useFormik } from "formik";
-import axios from "axios";
+import axios from 'axios';
+import { useFormik } from 'formik';
+import { useState } from 'react';
 // import { useNavigate } from "react-router-dom";
 
-
-
 export default function Login() {
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [successMsg, setSuccessMsg] = useState(null);
   const user = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
-  async function loginSubmit(values) {
-    // let navigate = useNavigate();
+  function loginSubmit(values) {
     axios
-      .post("https://ecommerce.routemisr.com/api/v1/auth/signin", values)
+      .post('https://ecommerce.routemisr.com/api/v1/auth/signin', values)
       .then((response) => {
-        console.log(response.data);
+        setSuccessMsg(response.data.message);
 
-        // setTimeout(() => {
-        //   navigate("/products");
-        // }, 2000);
+        setTimeout(() => {
+          setSuccessMsg(null);
+        }, 2000);
       })
       .catch((error) => {
-        console.error("There was an error!", error.response.data.message);
+        setErrorMsg(error.response.data.message);
+        setTimeout(() => {
+          setErrorMsg(null);
+        }, 2000);
       });
   }
   const registerFormic = useFormik({
@@ -32,12 +34,12 @@ export default function Login() {
       let errors = {};
       const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
       if (!emailRegex.test(values.email)) {
-        errors.email = "Invalid Email Format";
+        errors.email = 'Invalid Email Format';
       }
       const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
       if (!passwordRegex.test(values.password)) {
         errors.password =
-          "Password must be at least 8 characters long and contain at least one letter and one number";
+          'Password must be at least 8 characters long and contain at least one letter and one number';
       }
       return errors;
     },
@@ -46,6 +48,22 @@ export default function Login() {
     <>
       <div className="Container mt-20 h-[80vh] ">
         <h1 className="text-center">Login Now</h1>
+        {errorMsg && (
+          <div
+            className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 w-[30%] m-auto"
+            role="alert"
+          >
+            <span className="font-medium">Danger alert!</span> {errorMsg}
+          </div>
+        )}
+        {successMsg && (
+          <div
+            className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 w-[30%] m-auto"
+            role="alert"
+          >
+            <span className="font-medium">Success alert!</span> Welcome Back
+          </div>
+        )}
 
         <form
           className="max-w-md mx-auto "

@@ -1,7 +1,8 @@
-import { useFormik } from "formik";
-import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { useFormik } from 'formik';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import CounterContext from './../../context/CounterContext';
 
 export default function Register() {
   let navigate = useNavigate();
@@ -9,21 +10,21 @@ export default function Register() {
   let [successMessage, setSuccessMessage] = useState(null);
 
   const user = {
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-    rePassword: "",
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    rePassword: '',
   };
 
   function registerSubmit(values) {
     axios
-      .post("https://ecommerce.routemisr.com/api/v1/auth/signup", values)
+      .post('https://ecommerce.routemisr.com/api/v1/auth/signup', values)
       .then((res) => {
         setSuccessMessage(res.data.message);
         setTimeout(() => {
           setSuccessMessage(null);
-          navigate("login");
+          navigate('/login');
         }, 2000);
       })
       .catch((err) => {
@@ -37,24 +38,24 @@ export default function Register() {
     let errors = {};
     const nameRegex = /^[A-Z ][a-z]{4,}$/;
     if (!nameRegex.test(values.name)) {
-      errors.name = "Name Must Start With Capital Letter And More Than 4 Char";
+      errors.name = 'Name Must Start With Capital Letter And More Than 4 Char';
     }
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     if (!emailRegex.test(values.email)) {
-      errors.email = "Invalid Email Format";
+      errors.email = 'Invalid Email Format';
     }
     const phoneRegex = /^(20)?01[0125][0-9]{8}$/;
     if (!phoneRegex.test(values.phone)) {
-      errors.phone = "Invalid Phone Number must be Egyptian number";
+      errors.phone = 'Invalid Phone Number must be Egyptian number';
     }
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (!passwordRegex.test(values.password)) {
       errors.password =
-        "Password must be at least 8 characters long and contain at least one letter and one number";
+        'Password must be at least 8 characters long and contain at least one letter and one number';
     }
     const rePasswordRegex = values.password;
     if (values.rePassword !== rePasswordRegex) {
-      errors.rePassword = "Password and Confirm Password do not match";
+      errors.rePassword = 'Password and Confirm Password do not match';
     }
     console.log(errors);
 
@@ -69,6 +70,9 @@ export default function Register() {
 
   return (
     <>
+      <CounterContext>
+        <h1 className="text-center font-bold mt-50 ">Register Now</h1>
+      </CounterContext>
       <div className="container mx-auto py-10 mt-6 h-[88vh] ">
         <h1 className="text-center font-bold">Register Now</h1>
         {errorMessage ? (
@@ -80,10 +84,10 @@ export default function Register() {
           </div>
         ) : successMessage ? (
           <div
-            class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 mx-auto mt-6 dark:bg-gray-800 dark:text-green-400 w-[35%] "
+            className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 mx-auto mt-6 dark:bg-gray-800 dark:text-green-400 w-[35%] "
             role="alert"
           >
-            <span class="font-medium">Success alert!</span> Congratulation
+            <span className="font-medium">Success alert!</span> Congratulation
           </div>
         ) : null}
         <form
