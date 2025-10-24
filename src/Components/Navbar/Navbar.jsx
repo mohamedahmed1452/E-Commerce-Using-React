@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import FreshLogo from "../../assets/img/freshcart-logo.svg";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { authContext } from "../../context/AuthContext";
 
 export default function Navbar() {
+  const navigate = useNavigate();
+  const { userToken, setUserToken } = useContext(authContext);
+
+  function userLoggedOut() {
+    localStorage.removeItem("userToken");
+    setUserToken(null);
+    navigate("/login");
+  }
   return (
     <>
       <nav
@@ -15,17 +24,19 @@ export default function Navbar() {
               <img src={FreshLogo} alt="Fresh Cart" />
             </Link>
 
-            <ul className="flex items-center space-x-7">
-              <li>
-                <Link to="/products">Products</Link>
-              </li>
-              <li>
-                <Link to="#">Category</Link>
-              </li>
-              <li>
-                <Link to="#">Cart</Link>
-              </li>
-            </ul>
+            {userToken && (
+              <ul className="flex items-center space-x-7">
+                <li>
+                  <Link to="/products">Products</Link>
+                </li>
+                <li>
+                  <Link to="#">Category</Link>
+                </li>
+                <li>
+                  <Link to="#">Cart</Link>
+                </li>
+              </ul>
+            )}
           </div>
 
           <div className="flex gap-7 me-5">
@@ -45,22 +56,27 @@ export default function Navbar() {
             </ul>
 
             <ul className="flex items-center gap-4 ">
-              <li>
-                <NavLink to="/register">Register</NavLink>
-              </li>
-              <li>
-                <NavLink to="/login">Login</NavLink>
-              </li>
-
-              <li>
-                <span>Logout</span>
-              </li>
+              {userToken ? (
+                <li>
+                  <span className="cursor-pointer" onClick={userLoggedOut}>
+                    Logout
+                  </span>
+                </li>
+              ) : (
+                <>
+                  {" "}
+                  <li>
+                    <NavLink to="/register">Register</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/login">Login</NavLink>
+                  </li>{" "}
+                </>
+              )}
             </ul>
           </div>
         </div>
       </nav>
-
-  
     </>
   );
 }

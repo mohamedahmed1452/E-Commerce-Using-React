@@ -1,24 +1,31 @@
-import axios from 'axios';
-import { useFormik } from 'formik';
-import { useState } from 'react';
+import axios from "axios";
+import { useFormik } from "formik";
+import { useContext, useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
+import { authContext } from "./../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
+  const { setUserToken } = useContext(authContext);
+
   const user = {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   };
   function loginSubmit(values) {
     axios
-      .post('https://ecommerce.routemisr.com/api/v1/auth/signin', values)
+      .post("https://ecommerce.routemisr.com/api/v1/auth/signin", values)
       .then((response) => {
         setSuccessMsg(response.data.message);
-
+        localStorage.setItem("userToken", response.data.token);
+        setUserToken(response.data.token);
         setTimeout(() => {
           setSuccessMsg(null);
-        }, 2000);
+          navigate("/products");
+        }, 1000);
       })
       .catch((error) => {
         setErrorMsg(error.response.data.message);
@@ -27,22 +34,23 @@ export default function Login() {
         }, 2000);
       });
   }
+  function validateError(values) {
+    let errors = {};
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (!emailRegex.test(values.email)) {
+      errors.email = "Invalid Email Format";
+    }
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (!passwordRegex.test(values.password)) {
+      errors.password =
+        "Password must be at least 8 characters long and contain at least one letter and one number";
+    }
+    return errors;
+  }
   const registerFormic = useFormik({
     initialValues: user,
     onSubmit: loginSubmit,
-    validate: (values) => {
-      let errors = {};
-      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-      if (!emailRegex.test(values.email)) {
-        errors.email = 'Invalid Email Format';
-      }
-      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-      if (!passwordRegex.test(values.password)) {
-        errors.password =
-          'Password must be at least 8 characters long and contain at least one letter and one number';
-      }
-      return errors;
-    },
+    validate: validateError,
   });
   return (
     <>

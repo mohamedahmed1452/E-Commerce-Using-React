@@ -5,6 +5,7 @@ import Register from "./Components/Register/Register";
 import Login from "./Components/Login/Login";
 import NotFound from "./Components/NotFound/NotFound";
 import Products from "./Components/Product/Products";
+import AuthContextProvider from "./context/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <AuthContextProvider>
+        <RouterProvider router={router} />
+      </AuthContextProvider>
     </>
   );
 }
