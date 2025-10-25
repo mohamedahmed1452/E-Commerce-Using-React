@@ -8,16 +8,13 @@ export default function Navbar() {
   const { userToken, setUserToken } = useContext(authContext);
 
   function userLoggedOut() {
-    localStorage.removeItem("userToken");
+    localStorage.clear();
     setUserToken(null);
     navigate("/login");
   }
   return (
     <>
-      <nav
-        className="  border-b   bg-green-400
-       fixed  w-full z-10 p-3  top-0 left-0 right-0 "
-      >
+      <nav className="     bg-gray-300       sticky  w-full z-10 p-3  top-0 left-0 right-0 ">
         <div className="container  mx-auto text-center flex  justify-between ">
           <div className="flex gap-5 ms-5">
             <Link to="">
@@ -27,13 +24,16 @@ export default function Navbar() {
             {userToken && (
               <ul className="flex items-center space-x-7">
                 <li>
+                  <Link to="/home">Home</Link>
+                </li>
+                <li>
                   <Link to="/products">Products</Link>
                 </li>
                 <li>
-                  <Link to="#">Category</Link>
+                  <Link to="/category">Category</Link>
                 </li>
                 <li>
-                  <Link to="#">Cart</Link>
+                  <Link to="/cart">Cart</Link>
                 </li>
               </ul>
             )}

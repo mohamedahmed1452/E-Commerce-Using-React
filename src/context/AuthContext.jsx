@@ -6,6 +6,7 @@ export default function AuthContextProvider({ children }) {
   useEffect(() => {
     setUserToken(localStorage.getItem("userToken"));
   }, []);
+ 
   return (
     <div>
       <authContext.Provider value={{ setUserToken, userToken }}>

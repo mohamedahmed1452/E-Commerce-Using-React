@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { authContext } from "./../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Home from "./../Home/Home";
 
 export default function Login() {
   let navigate = useNavigate();
@@ -24,7 +25,7 @@ export default function Login() {
         setUserToken(response.data.token);
         setTimeout(() => {
           setSuccessMsg(null);
-          navigate("/products");
+          navigate("/home");
         }, 1000);
       })
       .catch((error) => {
@@ -140,6 +141,12 @@ export default function Login() {
           >
             Login
           </button>
+          <Link 
+            to="/register"
+            className="text-white ml-6 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Register
+          </Link>
         </form>
       </div>
     </>

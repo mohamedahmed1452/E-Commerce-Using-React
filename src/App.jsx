@@ -6,6 +6,13 @@ import Login from "./Components/Login/Login";
 import NotFound from "./Components/NotFound/NotFound";
 import Products from "./Components/Product/Products";
 import AuthContextProvider from "./context/AuthContext";
+import Home from "./Components/Home/Home";
+import Category from "./Components/Category/Category";
+import Cart from "./Components/Cart/Cart";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import ProtectedAuth from "./Components/ProtectedAuth/ProtectedAuth";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ProductDetails from "./Components/ProductDetails/ProductDetails";
 
 const router = createBrowserRouter([
   {
@@ -14,19 +21,64 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Register />,
+        element: <Home />,
+      },
+      {
+        path: "home",
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "products",
+        element: (
+          <ProtectedRoute>
+            <Products />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "productdetails/:id",
+        element: (
+          <ProtectedRoute>
+            <ProductDetails />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "category",
+        element: (
+          <ProtectedRoute>
+            <Category />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "cart",
+        element: (
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "register",
-        element: <Register />,
+        element: (
+          <ProtectedAuth>
+            <Register />
+          </ProtectedAuth>
+        ),
       },
       {
         path: "login",
-        element: <Login />,
-      },
-      {
-        path: "products",
-        element: <Products />,
+        element: (
+          <ProtectedAuth>
+            <Login />
+          </ProtectedAuth>
+        ),
       },
       {
         path: "*",
@@ -36,10 +88,16 @@ const router = createBrowserRouter([
   },
 ]);
 function App() {
+  // Create a client
+
+  const queryClient = new QueryClient();
+
   return (
     <>
       <AuthContextProvider>
-        <RouterProvider router={router} />
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
       </AuthContextProvider>
     </>
   );
