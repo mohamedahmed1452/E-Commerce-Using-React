@@ -13,6 +13,7 @@ import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import ProtectedAuth from "./Components/ProtectedAuth/ProtectedAuth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
+import CartContextProvider from "./context/CartContext";
 
 const router = createBrowserRouter([
   {
@@ -94,11 +95,13 @@ function App() {
 
   return (
     <>
-      <AuthContextProvider>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-        </QueryClientProvider>
-      </AuthContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthContextProvider>
+          <CartContextProvider>
+            <RouterProvider router={router} />
+          </CartContextProvider>
+        </AuthContextProvider>
+      </QueryClientProvider>
     </>
   );
 }

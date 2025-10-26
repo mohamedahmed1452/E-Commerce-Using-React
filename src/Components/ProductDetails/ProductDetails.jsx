@@ -1,11 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { SyncLoader } from "react-spinners";
+import { cartContext } from "../../context/CartContext";
 
 export default function ProductDetails() {
   const res = useParams();
+
+  const { addProductToCart } = useContext(cartContext);
+
+  function handleAddToCart() {
+    addProductToCart(res.id);
+  }
 
   const dataQuery = useQuery({
     queryKey: ["productDetails", res.id],
@@ -40,7 +47,6 @@ export default function ProductDetails() {
              max-w-7xl mx-auto p-5 md:p-10 
              mb-40 mt-6 bg-white rounded-xl shadow-md "
       >
-
         <div className="w-full md:w-1/4 mb-6 md:mb-0">
           <img
             className="rounded-md w-full h-full "
@@ -64,7 +70,10 @@ export default function ProductDetails() {
             </p>
           </div>
 
-          <button className="bg-lime-600 hover:bg-lime-700 text-white font-semibold py-2 rounded-lg w-full">
+          <button
+            onClick={handleAddToCart}
+            className="bg-lime-600 hover:bg-lime-700 text-white font-semibold py-2 rounded-lg w-full"
+          >
             +Add To Cart
           </button>
         </div>
