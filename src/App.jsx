@@ -24,7 +24,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home />,
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "home",
@@ -125,8 +129,6 @@ function App() {
         <div className="bg-black p-5 fixed top-0 start-5 text-white"></div>
         You are currently offline.
       </Offline>
-
-      
     </>
   );
 }
