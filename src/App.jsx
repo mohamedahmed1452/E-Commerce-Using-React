@@ -14,6 +14,8 @@ import ProtectedAuth from "./Components/ProtectedAuth/ProtectedAuth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
 import CartContextProvider from "./context/CartContext";
+import { Toaster } from "react-hot-toast";
+import Checkout from "./Components/Checkout/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +52,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "barnd",
+        element: (
+          <ProtectedRoute>
+            <Category />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "category",
         element: (
           <ProtectedRoute>
@@ -62,6 +72,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Cart />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "checkout",
+        element: (
+          <ProtectedRoute>
+            <Checkout />
           </ProtectedRoute>
         ),
       },
@@ -99,6 +117,7 @@ function App() {
         <AuthContextProvider>
           <CartContextProvider>
             <RouterProvider router={router} />
+            <Toaster />
           </CartContextProvider>
         </AuthContextProvider>
       </QueryClientProvider>

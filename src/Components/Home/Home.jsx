@@ -6,6 +6,8 @@ import CategoriesSlider from "../CategoriesSlider/CategoriesSlider";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import ProductDetails from "./../ProductDetails/ProductDetails";
+import { useContext } from "react";
+import { cartContext } from "../../context/CartContext";
 
 export default function Home() {
   const dataQuery = useQuery({
@@ -17,6 +19,8 @@ export default function Home() {
   });
 
   const { data, isError, isLoading } = dataQuery;
+
+  const { addProductToCart } = useContext(cartContext);
 
   if (isLoading) {
     return (
@@ -50,11 +54,7 @@ export default function Home() {
 
         <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-5 relative ">
           {data?.map((product) => (
-            <Link
-              to={`/productdetails/${product.id}`}
-              key={product.id}
-              onClick={localStorage.setItem("id", product.id)}
-            >
+            <Link to={`/productdetails/${product.id}`} key={product.id}>
               <div
                 key={product.id}
                 className="bg-blue-300 rounded-lg  group relative overflow-hidden"
@@ -69,7 +69,13 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <button className="w-10 h-10 bg-emerald-700 absolute top-2 right-2 translate-x-[200%] group-hover:translate-x-0 ">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      addProductToCart(product.id);
+                    }}
+                    className="w-10 h-10 bg-emerald-700 absolute top-2 right-2 translate-x-[200%] group-hover:translate-x-0 "
+                  >
                     +
                   </button>
                 </div>
