@@ -4,9 +4,11 @@ export default function AuthContextProvider({ children }) {
   const [userToken, setUserToken] = useState(null);
 
   useEffect(() => {
-    setUserToken(localStorage.getItem("userToken"));
+    if (userToken === null) {
+      setUserToken(localStorage.getItem("userToken"));
+    }
   }, []);
- 
+
   return (
     <div>
       <authContext.Provider value={{ setUserToken, userToken }}>

@@ -2,10 +2,12 @@ import React, { useContext } from "react";
 import FreshLogo from "../../assets/img/freshcart-logo.svg";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { authContext } from "../../context/AuthContext";
+import { cartContext } from "../../context/CartContext";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const { userToken, setUserToken } = useContext(authContext);
+  const { numberOfCartItems } = useContext(cartContext);
 
   function userLoggedOut() {
     localStorage.clear();
@@ -30,10 +32,10 @@ export default function Navbar() {
                   <Link to="/products">Products</Link>
                 </li>
                 <li>
-                  <Link to="/category">Category</Link>
+                  <Link to="/brand">Brands</Link>
                 </li>
                 <li>
-                  <Link to="/cart">Cart</Link>
+                  <Link to="/category">Categories</Link>
                 </li>
               </ul>
             )}
@@ -41,6 +43,17 @@ export default function Navbar() {
 
           <div className="flex gap-7 me-5">
             <ul className="flex items-center gap-5">
+              {userToken && (
+                <Link to="/cart">
+                  <li className="relative">
+                    <i className="fa-solid cursor-pointer   fa-cart-shopping"></i>
+                    <span className="absolute w-5 h-5 text-center bg-red-700 -top-3 -right-3 text-white">
+                      {numberOfCartItems}
+                    </span>
+                  </li>
+                </Link>
+              )}
+
               <li>
                 <i className="fa-brands cursor-pointer  fa-facebook-f "></i>
               </li>
@@ -64,13 +77,12 @@ export default function Navbar() {
                 </li>
               ) : (
                 <>
-                  {" "}
                   <li>
                     <NavLink to="/register">Register</NavLink>
                   </li>
                   <li>
                     <NavLink to="/login">Login</NavLink>
-                  </li>{" "}
+                  </li>
                 </>
               )}
             </ul>
