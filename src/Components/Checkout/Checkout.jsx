@@ -1,6 +1,5 @@
 import { useFormik } from "formik";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { cartContext } from "../../context/CartContext";
 
 export default function Checkout() {
