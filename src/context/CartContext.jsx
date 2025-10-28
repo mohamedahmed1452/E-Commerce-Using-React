@@ -14,7 +14,7 @@ export default function CartContextProvider({ children }) {
 
   console.log("Cart Id", cartId);
 
-  const numberOfCartItems = products?.length;
+  const numberOfCartItems = products? products.length : 0;
 
   useEffect(() => {
     if (userToken) {
@@ -134,6 +134,7 @@ export default function CartContextProvider({ children }) {
 
           setTotalCartPrice(0);
           setProducts(null);
+          setCartId(null);
           return res.data;
         } else {
           toast.error("Checkout failed.", {
