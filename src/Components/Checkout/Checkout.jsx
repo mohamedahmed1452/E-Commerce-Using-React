@@ -1,16 +1,23 @@
-import React, { useContext } from "react";
-import { cartContext } from "../../context/CartContext";
-import { Formik, useFormik } from "formik";
+import { useFormik } from 'formik';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { cartContext } from '../../context/CartContext';
 
 export default function Checkout() {
-  const { orderCheckout } = useContext(cartContext);
+  const { orderCheckout, orderCash } = useContext(cartContext);
+  const navigate = useNavigate();
   const formObj = useFormik({
     initialValues: {
-      details: "",
-      phone: "",
-      city: "",
+      details: '',
+      phone: '',
+      city: '',
     },
-    onSubmit: orderCheckout,
+    onSubmit: () => {
+      orderCash();
+      setTimeout(() => {
+        navigate('/home');
+      }, 1000);
+    },
   });
 
   return (
@@ -22,7 +29,8 @@ export default function Checkout() {
           <label htmlFor="details" className="block mb-2 text-sm font-medium">
             Details
           </label>
-          <input onChange={formObj.handleChange}
+          <input
+            onChange={formObj.handleChange}
             value={formObj.values.details}
             type="text"
             id="details"
@@ -35,7 +43,8 @@ export default function Checkout() {
           <label htmlFor="phone" className="block mb-2 text-sm font-medium">
             Your Phone
           </label>
-          <input onChange={formObj.handleChange}
+          <input
+            onChange={formObj.handleChange}
             value={formObj.values.phone}
             type="tel"
             id="phone"
@@ -47,7 +56,8 @@ export default function Checkout() {
           <label htmlFor="city" className="block mb-2 text-sm font-medium">
             Your City
           </label>
-          <input onChange={formObj.handleChange}
+          <input
+            onChange={formObj.handleChange}
             value={formObj.values.city}
             type="text"
             id="city"
@@ -56,12 +66,20 @@ export default function Checkout() {
           />
         </div>
 
-        <button 
-          type="submit"
-          className="text-white  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Proceed
-        </button>
+        <div className="flex justify-center container mx-auto gap-3">
+          <button
+            type="submit"
+            className="w-1/2  bg-green-950 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-l"
+          >
+            Cash Order
+          </button>
+          {/* <button
+            type="submit"
+            className="w-1/2 bg-green-950 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-l"
+          >
+            Checkout
+          </button> */}
+        </div>
       </form>
     </div>
   );
