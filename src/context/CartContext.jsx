@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { createContext, useContext, useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
-import { authContext } from './AuthContext';
+import axios from "axios";
+import { createContext, useContext, useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { authContext } from "./AuthContext";
 
 export const cartContext = createContext();
 
@@ -14,7 +14,7 @@ export default function CartContextProvider({ children }) {
   const [products, setProducts] = useState(null);
   const [cartId, setCartId] = useState(null);
 
-  console.log('Cart Id', cartId);
+  console.log("Cart Id", cartId);
 
   const numberOfCartItems = products ? products.length : 0;
 
@@ -26,7 +26,7 @@ export default function CartContextProvider({ children }) {
 
   function getUserCart() {
     axios
-      .get('https://ecommerce.routemisr.com/api/v1/cart', {
+      .get("https://ecommerce.routemisr.com/api/v1/cart", {
         headers: {
           token: userToken,
         },
@@ -38,34 +38,34 @@ export default function CartContextProvider({ children }) {
         setCartId(res.data.cartId);
       })
       .catch(() => {
-        console.log('Error fetching cart data');
+        console.log("Error fetching cart data");
       });
   }
 
   function addProductToCart(productId) {
     axios
       .post(
-        'https://ecommerce.routemisr.com/api/v1/cart',
+        "https://ecommerce.routemisr.com/api/v1/cart",
         {
           productId,
         },
-        {
+        { 
           headers: {
             token: userToken,
           },
         }
       )
       .then(() => {
-        toast.success('Product added to cart successfully!', {
+        toast.success("Product added to cart successfully!", {
           duration: 1000,
-          position: 'top-center',
+          position: "top-center",
         });
         getUserCart();
       })
       .catch(() => {
-        toast.error('Failed to add product to cart.', {
+        toast.error("Failed to add product to cart.", {
           duration: 1000,
-          position: 'top-center',
+          position: "top-center",
         });
       });
   }
@@ -89,9 +89,9 @@ export default function CartContextProvider({ children }) {
         setProducts(res.data.data.products);
       })
       .catch(() => {
-        toast.error('Failed to update cart item.', {
+        toast.error("Failed to update cart item.", {
           duration: 1000,
-          position: 'top-center',
+          position: "top-center",
         });
       });
   }
@@ -109,9 +109,9 @@ export default function CartContextProvider({ children }) {
         setProducts(res.data.data.products);
       })
       .catch(() => {
-        toast.error('Failed to remove cart item.', {
+        toast.error("Failed to remove cart item.", {
           duration: 1000,
-          position: 'top-center',
+          position: "top-center",
         });
       });
   }
@@ -128,10 +128,10 @@ export default function CartContextProvider({ children }) {
         }
       )
       .then((res) => {
-        if (res.data.status === 'success') {
-          toast.success('Checkout initiated successfully!', {
+        if (res.data.status === "success") {
+          toast.success("Checkout initiated successfully!", {
             duration: 1000,
-            position: 'top-center',
+            position: "top-center",
           });
 
           setTotalCartPrice(0);
@@ -140,9 +140,9 @@ export default function CartContextProvider({ children }) {
         }
       })
       .catch(() => {
-        toast.error('Failed to initiate checkout.', {
+        toast.error("Failed to initiate checkout.", {
           duration: 1000,
-          position: 'top-center',
+          position: "top-center",
         });
       });
   }
@@ -156,32 +156,31 @@ export default function CartContextProvider({ children }) {
             token: userToken,
           },
           params: {
-            url: 'http://localhost:5173/',
+            url: "http://localhost:5173/",
           },
         }
       )
       .then((res) => {
-        if (res.data.status === 'success') {
-          toast.success('Checkout initiated successfully!', {
+        if (res.data.status === "success") {
+          toast.success("Checkout initiated successfully!", {
             duration: 1000,
-            position: 'top-center',
+            position: "top-center",
           });
-          window.open(res.data.session.url,"_self");
+          window.open(res.data.session.url, "_self");
           setTotalCartPrice(0);
           setProducts(null);
           setCartId(null);
-
         } else {
-          toast.error('Checkout failed.', {
+          toast.error("Checkout failed.", {
             duration: 1000,
-            position: 'top-center',
+            position: "top-center",
           });
         }
       })
       .catch(() => {
-        toast.error('Failed to initiate checkout.', {
+        toast.error("Failed to initiate checkout.", {
           duration: 1000,
-          position: 'top-center',
+          position: "top-center",
         });
       });
   }
