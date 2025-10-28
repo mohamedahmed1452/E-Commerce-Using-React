@@ -167,15 +167,7 @@ export default function CartContextProvider({ children }) {
             position: "top-center",
           });
           window.open(res.data.session.url, "_self");
-          setTotalCartPrice(0);
-          setProducts(null);
-          setCartId(null);
-        } else {
-          toast.error("Checkout failed.", {
-            duration: 1000,
-            position: "top-center",
-          });
-        }
+        } 
       })
       .catch(() => {
         toast.error("Failed to initiate checkout.", {

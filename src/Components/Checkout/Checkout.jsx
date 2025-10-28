@@ -1,22 +1,19 @@
-import { useFormik } from 'formik';
-import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { cartContext } from '../../context/CartContext';
+import { useFormik } from "formik";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { cartContext } from "../../context/CartContext";
 
 export default function Checkout() {
   const { orderCheckout, orderCash } = useContext(cartContext);
-  const navigate = useNavigate();
+  const [isCash, setIsCash] = useState(true);
   const formObj = useFormik({
     initialValues: {
-      details: '',
-      phone: '',
-      city: '',
+      details: "",
+      phone: "",
+      city: "",
     },
     onSubmit: () => {
-      orderCash();
-      setTimeout(() => {
-        navigate('/home');
-      }, 1000);
+      isCash ? orderCash() : orderCheckout();
     },
   });
 
@@ -68,17 +65,23 @@ export default function Checkout() {
 
         <div className="flex justify-center container mx-auto gap-3">
           <button
+            onClick={() => {
+              setIsCash(true);
+            }}
             type="submit"
             className="w-1/2  bg-green-950 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-l"
           >
             Cash Order
           </button>
-          {/* <button
+          <button
+            onClick={() => {
+              setIsCash(false);
+            }}
             type="submit"
             className="w-1/2 bg-green-950 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-l"
           >
             Checkout
-          </button> */}
+          </button>
         </div>
       </form>
     </div>

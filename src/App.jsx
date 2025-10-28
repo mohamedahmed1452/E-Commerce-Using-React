@@ -16,7 +16,7 @@ import ProductDetails from "./Components/ProductDetails/ProductDetails";
 import CartContextProvider from "./context/CartContext";
 import { Toaster } from "react-hot-toast";
 import Checkout from "./Components/Checkout/Checkout";
-
+import { Offline, Online } from "react-detect-offline";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -121,6 +121,12 @@ function App() {
           </CartContextProvider>
         </AuthContextProvider>
       </QueryClientProvider>
+      <Offline>
+        <div className="bg-black p-5 fixed top-0 start-5 text-white"></div>
+        You are currently offline.
+      </Offline>
+
+      
     </>
   );
 }
