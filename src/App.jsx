@@ -110,7 +110,7 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-function App() {
+export default function App() {
   // Create a client
 
   const queryClient = new QueryClient();
@@ -133,4 +133,3 @@ function App() {
   );
 }
 
-export default App;
