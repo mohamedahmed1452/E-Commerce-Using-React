@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import FreshLogo from "../../assets/img/freshcart-logo.svg";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { authContext } from "../../context/AuthContext";
 import { cartContext } from "../../context/CartContext";
-
+import { Menu, X } from "lucide-react"; // icons for hamburger
 export default function Navbar() {
   const navigate = useNavigate();
   const { userToken, setUserToken } = useContext(authContext);
   const { numberOfCartItems } = useContext(cartContext);
+  const [isOpen, setIsOpen] = useState(false);
 
   function userLoggedOut() {
     localStorage.clear();
@@ -18,36 +19,49 @@ export default function Navbar() {
     <>
       <nav className="     bg-gray-300       sticky  w-full z-10 p-3  top-0 left-0 right-0 ">
         <div className="container  mx-auto text-center flex  justify-between ">
-          <div className="flex gap-5 ms-5">
+          <div className="flex md:gap-5 md:ms-5">
+            <button
+              className={(userToken)?`md:hidden text-gray-700 `:`hidden`}
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <Menu size={24} /> : <Menu size={24} />}
+            </button>
+
             <Link to="">
               <img src={FreshLogo} alt="Fresh Cart" />
             </Link>
 
             {userToken && (
-              <ul className="flex items-center space-x-7">
+              <ul
+                className={`flex flex-col items-start ps-10  md:flex-row md:items-center md:space-x-7 absolute md:static bg-gray-200 md:bg-transparent left-0 w-full md:w-auto top-12 md:top-auto transition-all duration-300 ease-in-out ${
+                  isOpen
+                    ? "opacity-100 visible"
+                    : "opacity-0 invisible md:opacity-100 md:visible"
+                }`}
+              >
                 <li>
-                  <Link to="/home">Home</Link>
+                  <NavLink to="/home">Home</NavLink>
                 </li>
                 <li>
-                  <Link to="/products">Products</Link>
+                  <NavLink to="/products">Products</NavLink>
                 </li>
                 <li>
-                  <Link to="/brand">Brands</Link>
+                  <NavLink to="/brand">Brands</NavLink>
                 </li>
                 <li>
-                  <Link to="/category">Categories</Link>
+                  <NavLink to="/category">Categories</NavLink>
                 </li>
               </ul>
             )}
           </div>
 
-          <div className="flex gap-7 me-5">
-            <ul className="flex items-center gap-5">
+          <div className="flex gap-5 md:me-5">
+            <ul className="flex  gap-2 md:gap-5">
               {userToken && (
                 <Link to="/cart">
                   <li className="relative">
                     <i className="fa-solid cursor-pointer   fa-cart-shopping"></i>
-                    <span className="absolute w-5 h-5 text-center bg-red-700 -top-3 -right-3 text-white">
+                    <span className="bg-[#ff6b6b] w-[15px] h-[15px] rounded-full absolute  text-center text-[12px]  font-semibold bottom-[19px] left-[12px] text-white">
                       {numberOfCartItems}
                     </span>
                   </li>
@@ -68,7 +82,7 @@ export default function Navbar() {
               </li>
             </ul>
 
-            <ul className="flex items-center gap-4 ">
+            <ul className="flex  md:gap-4 ">
               {userToken ? (
                 <li>
                   <span className="cursor-pointer" onClick={userLoggedOut}>
