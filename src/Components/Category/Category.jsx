@@ -1,6 +1,5 @@
-
-import { SyncLoader } from "react-spinners";
-import useCategories from "../../customHooks/useCategories";
+import { SyncLoader } from 'react-spinners';
+import useCategories from '../../customHooks/useCategories';
 
 export default function Category() {
   const { data, isLoading } = useCategories();
