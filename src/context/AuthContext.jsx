@@ -7,6 +7,8 @@ export default function AuthContextProvider({ children }) {
 
 
 
+
+
   useEffect(() => {
     if (userToken) {
       setUserData(jwtDecode(userToken));
@@ -14,16 +16,22 @@ export default function AuthContextProvider({ children }) {
   }, [userToken]);
 
   useEffect(() => {
-    if (userToken === null) {
-      setUserToken(localStorage.getItem('userToken'));
+    const tkn=localStorage.getItem('userToken');
+    if (tkn !== null) {
+      setUserToken(tkn);
     }
+
+
+
   }, []);
 
   return (
     <div>
+
       <authContext.Provider value={{ setUserToken, userToken, userData }}>
         {children}
-      </authContext.Provider>
+        </authContext.Provider>
+
     </div>
   );
 }

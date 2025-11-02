@@ -7,14 +7,15 @@ export default function Category() {
 
   if (isLoading) {
     return (
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
+      <div className="  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
+        <h1>Hello</h1>
         <SyncLoader />
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto mb-30 mt-15 ">
+    <div className="h-[70vh] container mx-auto mb-30 mt-15 ">
       <h1 className="text-2xl md:text-2xl lg:text-4xl font-bold mb-5">
         Show Popular Categories
       </h1>
