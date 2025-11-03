@@ -2,6 +2,7 @@ import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { authContext } from "./AuthContext";
+import { useQuery } from "@tanstack/react-query";
 
 export const cartContext = createContext();
 
@@ -32,7 +33,6 @@ export default function CartContextProvider({ children }) {
         },
       })
       .then((res) => {
-        // setNumberOfCartItems(res.data.numOfCartItems);
         setTotalCartPrice(res.data.data.totalCartPrice);
         setProducts(res.data.data.products);
         setCartId(res.data.cartId);
@@ -42,6 +42,9 @@ export default function CartContextProvider({ children }) {
       });
   }
 
+
+
+
   function addProductToCart(productId) {
     axios
       .post(
@@ -49,7 +52,7 @@ export default function CartContextProvider({ children }) {
         {
           productId,
         },
-        { 
+        {
           headers: {
             token: userToken,
           },
@@ -167,7 +170,7 @@ export default function CartContextProvider({ children }) {
             position: "top-center",
           });
           window.open(res.data.session.url, "_self");
-        } 
+        }
       })
       .catch(() => {
         toast.error("Failed to initiate checkout.", {
