@@ -18,6 +18,8 @@ import { Toaster } from "react-hot-toast";
 import Checkout from "./Components/Checkout/Checkout";
 import { Offline, Online } from "react-detect-offline";
 import Brand from "./Components/Brand/Brand";
+import { createdStore } from "./redux/reduxStore";
+import { Provider } from "react-redux";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -118,19 +120,20 @@ export default function App() {
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <AuthContextProvider>
-          <CartContextProvider>
-            <RouterProvider router={router} />
-            <Toaster />
-          </CartContextProvider>
-        </AuthContextProvider>
-      </QueryClientProvider>
-      <Offline>
-        <div className="bg-black p-5 fixed top-0 start-5 text-white"></div>
-        You are currently offline.
-      </Offline>
+      <Provider store={createdStore}>
+        <QueryClientProvider client={queryClient}>
+          <AuthContextProvider>
+            <CartContextProvider>
+              <RouterProvider router={router} />
+              <Toaster />
+            </CartContextProvider>
+          </AuthContextProvider>
+        </QueryClientProvider>
+        <Offline>
+          <div className="bg-black p-5 fixed top-0 start-5 text-white"></div>
+          You are currently offline.
+        </Offline>
+      </Provider>
     </>
   );
 }
-
