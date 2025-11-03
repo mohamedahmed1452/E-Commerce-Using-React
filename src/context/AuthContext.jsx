@@ -10,18 +10,18 @@ export default function AuthContextProvider({ children }) {
   const [userData, setUserData] = useState(null);
 
 
-
+ useEffect(() => {
+    if (userToken === null) {
+      setUserToken(localStorage.getItem('userToken'));
+    }
+  }, []);
   useEffect(() => {
     if (userToken) {
       setUserData(jwtDecode(userToken));
     }
   }, [userToken]);
 
-  useEffect(() => {
-    if (userToken === null) {
-      setUserToken(localStorage.getItem('userToken'));
-    }
-  }, []);
+ 
 
   return (
     <div>

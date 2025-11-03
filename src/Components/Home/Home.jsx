@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import ProductDetails from "./../ProductDetails/ProductDetails";
 import { useContext } from "react";
 import { cartContext } from "../../context/CartContext";
+import Spinner from './../Spinner/Spinner';
 
 export default function Home() {
   const dataQuery = useQuery({
@@ -25,7 +26,7 @@ export default function Home() {
   if (isLoading) {
     return (
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
-        <SyncLoader />
+       <  Spinner />
       </div>
     );
   }

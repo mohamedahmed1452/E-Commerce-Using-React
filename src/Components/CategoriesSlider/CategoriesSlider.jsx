@@ -1,6 +1,7 @@
 import Slider from "react-slick";
 import { ClipLoader, SyncLoader } from "react-spinners";
 import useCategories from "./../../customHooks/useCategories";
+import Spinner from "../Spinner/Spinner";
 export default function CategoriesSlider() {
   var settings = {
     dots: true,
@@ -17,7 +18,7 @@ export default function CategoriesSlider() {
   if (isLoading) {
     return (
       <div className="absolute top-1/2 left-1/2 translate-x-1/2 translate-y-1/2 ">
-        <SyncLoader />
+        <Spinner />
       </div>
     );
   }
