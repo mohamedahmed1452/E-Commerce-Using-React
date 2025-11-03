@@ -17,6 +17,7 @@ import CartContextProvider from "./context/CartContext";
 import { Toaster } from "react-hot-toast";
 import Checkout from "./Components/Checkout/Checkout";
 import { Offline, Online } from "react-detect-offline";
+import Brand from "./Components/Brand/Brand";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -56,10 +57,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "barnd",
+        path: "brand",
         element: (
           <ProtectedRoute>
-            <Category />
+            <Brand />
           </ProtectedRoute>
         ),
       },

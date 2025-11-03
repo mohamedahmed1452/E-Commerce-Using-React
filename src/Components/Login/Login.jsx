@@ -1,10 +1,8 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import { useContext, useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import { authContext } from "./../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import Home from "./../Home/Home";
 
 export default function Login() {
   let navigate = useNavigate();
@@ -16,6 +14,7 @@ export default function Login() {
     email: "",
     password: "",
   };
+
   function loginSubmit(values) {
     axios
       .post("https://ecommerce.routemisr.com/api/v1/auth/signin", values)
@@ -26,7 +25,7 @@ export default function Login() {
         setTimeout(() => {
           setSuccessMsg(null);
           navigate("/home");
-        }, 1000);
+        }, 2000);
       })
       .catch((error) => {
         setErrorMsg(error.response.data.message);
@@ -48,15 +47,15 @@ export default function Login() {
     }
     return errors;
   }
-  const registerFormic = useFormik({
+  const loginFormik = useFormik({
     initialValues: user,
     onSubmit: loginSubmit,
     validate: validateError,
   });
   return (
     <>
-      <div className="Container mt-20 h-[80vh] ">
-        <h1 className="text-center">Login Now</h1>
+      <div className="Container mt-20 h-[74vh] ">
+        <h1 className="text-center text-lime-700">Login Now</h1>
         {errorMsg && (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 w-[30%] m-auto"
@@ -76,16 +75,16 @@ export default function Login() {
 
         <form
           className="max-w-md mx-auto "
-          onSubmit={registerFormic.handleSubmit}
+          onSubmit={loginFormik.handleSubmit}
         >
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="email"
               name="email"
               id="email"
-              value={registerFormic.values.email}
-              onChange={registerFormic.handleChange}
-              onBlur={registerFormic.handleBlur}
+              value={loginFormik.values.email}
+              onChange={loginFormik.handleChange}
+              onBlur={loginFormik.handleBlur}
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
@@ -96,12 +95,12 @@ export default function Login() {
             >
               Email
             </label>
-            {registerFormic.errors.email && registerFormic.touched.email ? (
+            {loginFormik.errors.email && loginFormik.touched.email ? (
               <div
                 className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                 role="alert"
               >
-                {registerFormic.errors.email}
+                {loginFormik.errors.email}
               </div>
             ) : null}
           </div>
@@ -111,9 +110,9 @@ export default function Login() {
               type="password"
               name="password"
               id="password"
-              value={registerFormic.values.password}
-              onChange={registerFormic.handleChange}
-              onBlur={registerFormic.handleBlur}
+              value={loginFormik.values.password}
+              onChange={loginFormik.handleChange}
+              onBlur={loginFormik.handleBlur}
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
@@ -124,29 +123,31 @@ export default function Login() {
             >
               Password
             </label>
-            {registerFormic.errors.password &&
-            registerFormic.touched.password ? (
+            {loginFormik.errors.password &&
+            loginFormik.touched.password ? (
               <div
                 className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                 role="alert"
               >
-                {registerFormic.errors.password}
+                {loginFormik.errors.password}
               </div>
             ) : null}
           </div>
 
-          <button
-            type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Login
-          </button>
-          <Link 
-            to="/register"
-            className="text-white ml-6 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Register
-          </Link>
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-3 justify-center">
+            <button
+              type="submit"
+              className="flex-1 text-white bg-lime-950 hover:bg-lime-950 focus:ring-4 focus:outline-none focus:ring-lime-950 font-medium rounded-lg text-sm w-full sm:w-auto p-2 text-center dark:bg-lime-950 dark:hover:bg-lime-950 dark:focus:ring-lime-950"
+            >
+              Login
+            </button>
+            <Link
+              to="/register"
+              className=" flex-1 text-white bg-lime-950 hover:bg-lime-950 focus:ring-4 focus:outline-none focus:ring-lime-950 font-medium rounded-lg text-sm w-full sm:w-auto p-2 text-center dark:bg-lime-950 dark:hover:bg-lime-950 dark:focus:ring-lime-950"
+            >
+              Register
+            </Link>
+          </div>
         </form>
       </div>
     </>

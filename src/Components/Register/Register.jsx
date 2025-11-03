@@ -20,7 +20,6 @@ export default function Register() {
     axios
       .post("https://ecommerce.routemisr.com/api/v1/auth/signup", values)
       .then((res) => {
-        console.log(res.data);
         setSuccessMessage(res.data.message);
         setTimeout(() => {
           setSuccessMessage(null);
@@ -36,9 +35,9 @@ export default function Register() {
         }, 2000);
       });
   }
-  function validate_errors(values) {
+  function validateErrors(values) {
     let errors = {};
-    const nameRegex = /^[A-Z ][a-z]{4,}$/;
+    const nameRegex = /^[A-Z ][a-z\s]{3,}$/;
     if (!nameRegex.test(values.name)) {
       errors.name = "Name Must Start With Capital Letter And More Than 4 Char";
     }
@@ -64,16 +63,18 @@ export default function Register() {
     return errors;
   }
 
-  const registerFormic = useFormik({
+  const registerFormiK = useFormik({
     initialValues: user,
     onSubmit: registerSubmit,
-    validate: validate_errors,
+    validate: validateErrors,
   });
+
+
 
   return (
     <>
-      <div className="container mx-auto py-10 mt-6 h-[88vh] ">
-        <h1 className="text-center font-bold">Register Now</h1>
+      <div className="container mx-auto py-10 mt-6 h-[82vh] ">
+        <h1 className="text-center font-bold text-2xl text-lime-900">Register Now</h1>
         {errorMessage ? (
           <div
             className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 w-[35%] mx-auto mt-6"
@@ -89,18 +90,20 @@ export default function Register() {
             <span className="font-medium">Success alert!</span> Congratulation
           </div>
         ) : null}
+
+
         <form
           className="max-w-md mx-auto "
-          onSubmit={registerFormic.handleSubmit}
+          onSubmit={registerFormiK.handleSubmit}
         >
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="text"
               name="name"
               id="name"
-              value={registerFormic.values.name}
-              onChange={registerFormic.handleChange}
-              onBlur={registerFormic.handleBlur}
+              value={registerFormiK.values.name}
+              onChange={registerFormiK.handleChange}
+              onBlur={registerFormiK.handleBlur}
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
@@ -111,12 +114,12 @@ export default function Register() {
             >
               Name
             </label>
-            {registerFormic.errors.name && registerFormic.touched.name ? (
+            {registerFormiK.errors.name && registerFormiK.touched.name ? (
               <div
                 className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                 role="alert"
               >
-                {registerFormic.errors.name}
+                {registerFormiK.errors.name}
               </div>
             ) : null}
           </div>
@@ -125,9 +128,9 @@ export default function Register() {
               type="email"
               name="email"
               id="email"
-              value={registerFormic.values.email}
-              onChange={registerFormic.handleChange}
-              onBlur={registerFormic.handleBlur}
+              value={registerFormiK.values.email}
+              onChange={registerFormiK.handleChange}
+              onBlur={registerFormiK.handleBlur}
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
@@ -138,12 +141,12 @@ export default function Register() {
             >
               Email
             </label>
-            {registerFormic.errors.email && registerFormic.touched.email ? (
+            {registerFormiK.errors.email && registerFormiK.touched.email ? (
               <div
                 className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                 role="alert"
               >
-                {registerFormic.errors.email}
+                {registerFormiK.errors.email}
               </div>
             ) : null}
           </div>
@@ -152,9 +155,9 @@ export default function Register() {
               type="tel"
               name="phone"
               id="phone"
-              value={registerFormic.values.phone}
-              onChange={registerFormic.handleChange}
-              onBlur={registerFormic.handleBlur}
+              value={registerFormiK.values.phone}
+              onChange={registerFormiK.handleChange}
+              onBlur={registerFormiK.handleBlur}
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
@@ -165,12 +168,12 @@ export default function Register() {
             >
               Phone Number
             </label>
-            {registerFormic.errors.phone && registerFormic.touched.phone ? (
+            {registerFormiK.errors.phone && registerFormiK.touched.phone ? (
               <div
                 className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                 role="alert"
               >
-                {registerFormic.errors.phone}
+                {registerFormiK.errors.phone}
               </div>
             ) : null}
           </div>
@@ -180,9 +183,9 @@ export default function Register() {
               type="password"
               name="password"
               id="password"
-              value={registerFormic.values.password}
-              onChange={registerFormic.handleChange}
-              onBlur={registerFormic.handleBlur}
+              value={registerFormiK.values.password}
+              onChange={registerFormiK.handleChange}
+              onBlur={registerFormiK.handleBlur}
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
@@ -193,13 +196,13 @@ export default function Register() {
             >
               Password
             </label>
-            {registerFormic.errors.password &&
-            registerFormic.touched.password ? (
+            {registerFormiK.errors.password &&
+            registerFormiK.touched.password ? (
               <div
                 className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                 role="alert"
               >
-                {registerFormic.errors.password}
+                {registerFormiK.errors.password}
               </div>
             ) : null}
           </div>
@@ -208,9 +211,9 @@ export default function Register() {
               type="password"
               name="rePassword"
               id="rePassword"
-              value={registerFormic.values.rePassword}
-              onChange={registerFormic.handleChange}
-              onBlur={registerFormic.handleBlur}
+              value={registerFormiK.values.rePassword}
+              onChange={registerFormiK.handleChange}
+              onBlur={registerFormiK.handleBlur}
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
@@ -221,20 +224,20 @@ export default function Register() {
             >
               Confirm Password
             </label>
-            {registerFormic.errors.rePassword &&
-            registerFormic.touched.rePassword ? (
+            {registerFormiK.errors.rePassword &&
+            registerFormiK.touched.rePassword ? (
               <div
                 className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                 role="alert"
               >
-                {registerFormic.errors.rePassword}
+                {registerFormiK.errors.rePassword}
               </div>
             ) : null}
           </div>
 
           <button
             type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="text-white bg-lime-900 hover:bg-lime-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center dark:bg-lime-900 dark:hover:bg-lime-900 dark:focus:ring-lime-900"
           >
             Submit
           </button>

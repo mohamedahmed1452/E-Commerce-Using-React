@@ -1,6 +1,10 @@
 import { jwtDecode } from 'jwt-decode';
 import { createContext, useEffect, useState } from 'react';
 export const authContext = createContext();
+
+
+
+
 export default function AuthContextProvider({ children }) {
   const [userToken, setUserToken] = useState(null);
   const [userData, setUserData] = useState(null);
