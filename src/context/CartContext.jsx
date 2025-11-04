@@ -14,6 +14,8 @@ export default function CartContextProvider({ children }) {
   const [totalCartPrice, setTotalCartPrice] = useState(0);
   const [products, setProducts] = useState(null);
   const [cartId, setCartId] = useState(null);
+  const [allProducts, setallProducts] = useState(null);
+
 
   console.log("Cart Id", cartId);
 

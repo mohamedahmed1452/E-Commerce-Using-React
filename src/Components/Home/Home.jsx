@@ -25,7 +25,7 @@ export default function Home() {
     queryKey: ["allProducts"],
     queryFn: () =>
       axios
-        .get("https://ecommerce.routemisr.com/api/v1/products")
+        .get("https://ecommerce.routemisr.com/api/v1/products?limit=10")
         .then((res) => res.data.data),
   });
 
@@ -70,10 +70,10 @@ export default function Home() {
             </button>
             <button className="p-3 ms-2 bg-lime-800">-</button>
           </div> */}
-          Show Popular Categories
+          Show Popular  Products
         </h1>
 
-        <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-5 relative ">
+        <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-5 relative ">
           {data?.map((product) => (
             <Link to={`/productdetails/${product.id}`} key={product.id}>
               <div
@@ -103,6 +103,12 @@ export default function Home() {
               </div>
             </Link>
           ))}
+        </div>
+
+        <div className="container mx-auto mb-50 mt-15">
+          <Link to="/products">
+            <button className="ms-150 p-3 bg-lime-800">Show All Products</button>
+          </Link>
         </div>
       </div>
     </>

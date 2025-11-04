@@ -42,9 +42,7 @@ export default function Navbar() {
                 <li>
                   <NavLink to="/home">Home</NavLink>
                 </li>
-                <li>
-                  <NavLink to="/products">Products</NavLink>
-                </li>
+            
                 <li>
                   <NavLink to="/brand">Brands</NavLink>
                 </li>

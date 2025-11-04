@@ -20,6 +20,7 @@ import { Offline, Online } from "react-detect-offline";
 import Brand from "./Components/Brand/Brand";
 import { createdStore } from "./redux/reduxStore";
 import { Provider } from "react-redux";
+import BrandProducts from "./Components/BrandProducts/BrandProducts";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -55,6 +56,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <ProductDetails />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "brandProducts/:id",
+        element: (
+          <ProtectedRoute>
+            <BrandProducts />
           </ProtectedRoute>
         ),
       },
