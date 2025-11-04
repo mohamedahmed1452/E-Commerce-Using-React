@@ -10,6 +10,7 @@ export default function Brand() {
       axios
         .get('https://ecommerce.routemisr.com/api/v1/brands')
         .then((res) => res.data.data),
+    refetchInterval: 6000000,
   });
   const { data, isLoading, isError } = brandQuery;
 
