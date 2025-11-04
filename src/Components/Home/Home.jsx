@@ -8,9 +8,19 @@ import { Link } from "react-router-dom";
 import ProductDetails from "./../ProductDetails/ProductDetails";
 import { useContext } from "react";
 import { cartContext } from "../../context/CartContext";
-import Spinner from './../Spinner/Spinner';
+import Spinner from "./../Spinner/Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  decrement,
+  increment,
+  incrementByAmount,
+} from "../../redux/counterSlice";
 
 export default function Home() {
+  const initialState = useSelector((x) => x.counterReducer);
+  // const dispatch = useDispatch();
+  console.log(initialState);
+
   const dataQuery = useQuery({
     queryKey: ["allProducts"],
     queryFn: () =>
@@ -26,7 +36,7 @@ export default function Home() {
   if (isLoading) {
     return (
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
-        <SyncLoader />
+        <Spinner />
       </div>
     );
   }
@@ -50,6 +60,16 @@ export default function Home() {
 
       <div className="container mx-auto mb-50 mt-15">
         <h1 className="text-2xl md:text-2xl lg:text-4xl font-bold">
+          {/* <h1>About Component {initialState.counter} </h1>
+          <div>
+            <button
+              // onClick={dispatch(increment)}
+              className="p-3 me-2 bg-lime-800"
+            >
+              +
+            </button>
+            <button className="p-3 ms-2 bg-lime-800">-</button>
+          </div> */}
           Show Popular Categories
         </h1>
 
