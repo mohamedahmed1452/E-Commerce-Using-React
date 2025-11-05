@@ -12,7 +12,7 @@ export default function Cart() {
   } = useContext(cartContext);
 
   return (
-    <div className="container mx-auto  ">
+    <div className="container mx-auto  h-[100vh]">
       <h1 className="m-3 font-bold text-3xl">Cart Page</h1>
       <div className="mt-5 m-4">
         <p className="font-medium  text-2xl">
@@ -139,7 +139,7 @@ export default function Cart() {
           </tbody>
         </table>
         <Link to="/checkout">
-          <button className="bg-green-950 p-5 m-auto mt-5 w-full text-white rounded-lg">
+          <button className="bg-green-950 p-5 m-auto mt-5 w-full text-white rounded-lg cursor-pointer text-2xl">
             Proceed To Checkout
           </button>
         </Link>

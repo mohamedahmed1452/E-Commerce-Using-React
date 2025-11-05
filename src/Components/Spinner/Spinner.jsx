@@ -1,13 +1,15 @@
-import React from "react";
-import { FallingLines } from "react-loader-spinner";
+import { ThreeCircles } from "react-loader-spinner";
 
 export default function Spinner() {
   return (
-    <FallingLines
-      color="#4fa94d"
-      width="100"
+    <ThreeCircles
       visible={true}
-      ariaLabel="falling-circles-loading"
+      height="100"
+      width="100"
+      color="#000"
+      ariaLabel="three-circles-loading"
+      wrapperStyle={{}}
+      wrapperClass=""
     />
   );
 }

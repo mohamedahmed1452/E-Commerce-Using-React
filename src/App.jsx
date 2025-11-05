@@ -1,41 +1,33 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./App.css";
-import Layout from "./Components/Layout/Layout";
-import Register from "./Components/Register/Register";
-import Login from "./Components/Login/Login";
-import NotFound from "./Components/NotFound/NotFound";
-import Products from "./Components/Product/Products";
-import AuthContextProvider from "./context/AuthContext";
-import Home from "./Components/Home/Home";
-import Category from "./Components/Category/Category";
-import Cart from "./Components/Cart/Cart";
-import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
-import ProtectedAuth from "./Components/ProtectedAuth/ProtectedAuth";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import ProductDetails from "./Components/ProductDetails/ProductDetails";
-import CartContextProvider from "./context/CartContext";
-import { Toaster } from "react-hot-toast";
-import Checkout from "./Components/Checkout/Checkout";
-import { Offline, Online } from "react-detect-offline";
-import Brand from "./Components/Brand/Brand";
-import { createdStore } from "./redux/reduxStore";
-import { Provider } from "react-redux";
-import BrandDetails from "./Components/BrandDetails/BrandDetails";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Offline } from 'react-detect-offline';
+import { Toaster } from 'react-hot-toast';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './App.css';
+import Brand from './Components/Brand/Brand';
+import BrandDetails from './Components/BrandDetails/BrandDetails';
+import Cart from './Components/Cart/Cart';
+import Category from './Components/Category/Category';
+import Checkout from './Components/Checkout/Checkout';
+import Favorite from './Components/Favorite/Favorite';
+import Home from './Components/Home/Home';
+import Layout from './Components/Layout/Layout';
+import Login from './Components/Login/Login';
+import NotFound from './Components/NotFound/NotFound';
+import Products from './Components/Product/Products';
+import ProductDetails from './Components/ProductDetails/ProductDetails';
+import ProtectedAuth from './Components/ProtectedAuth/ProtectedAuth';
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
+import Register from './Components/Register/Register';
+import AuthContextProvider from './context/AuthContext';
+import CartContextProvider from './context/CartContext';
+import FavoriteContextProvider from './context/FavoriteContext';
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Layout />,
     children: [
       {
-        path: "",
-        element: (
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "home",
+        index: true,
         element: (
           <ProtectedRoute>
             <Home />
@@ -44,7 +36,15 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "products",
+        path: 'home',
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'products',
         element: (
           <ProtectedRoute>
             <Products />
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "productdetails/:id",
+        path: 'productdetails/:id',
         element: (
           <ProtectedRoute>
             <ProductDetails />
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "brandDetails/:id",
+        path: 'brandDetails/:id',
         element: (
           <ProtectedRoute>
             <BrandDetails />
@@ -68,7 +68,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "brand",
+        path: 'brand',
         element: (
           <ProtectedRoute>
             <Brand />
@@ -76,7 +76,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "category",
+        path: 'category',
         element: (
           <ProtectedRoute>
             <Category />
@@ -84,7 +84,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "cart",
+        path: 'cart',
         element: (
           <ProtectedRoute>
             <Cart />
@@ -92,7 +92,15 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "checkout",
+        path: 'favorites',
+        element: (
+          <ProtectedRoute>
+            <Favorite />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'checkout',
         element: (
           <ProtectedRoute>
             <Checkout />
@@ -100,7 +108,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "register",
+        path: 'register',
         element: (
           <ProtectedAuth>
             <Register />
@@ -108,7 +116,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "login",
+        path: 'login',
         element: (
           <ProtectedAuth>
             <Login />
@@ -116,7 +124,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "*",
+        path: '*',
         element: <NotFound />,
       },
     ],
@@ -129,20 +137,20 @@ export default function App() {
 
   return (
     <>
-      <Provider store={createdStore}>
-        <QueryClientProvider client={queryClient}>
-          <AuthContextProvider>
-            <CartContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthContextProvider>
+          <CartContextProvider>
+            <FavoriteContextProvider>
               <RouterProvider router={router} />
               <Toaster />
-            </CartContextProvider>
-          </AuthContextProvider>
-        </QueryClientProvider>
-        <Offline>
-          <div className="bg-black p-5 fixed top-0 start-5 text-white"></div>
-          You are currently offline.
-        </Offline>
-      </Provider>
+            </FavoriteContextProvider>
+          </CartContextProvider>
+        </AuthContextProvider>
+      </QueryClientProvider>
+      <Offline>
+        <div className="bg-black p-5 fixed top-0 start-5 text-white"></div>
+        You are currently offline.
+      </Offline>
     </>
   );
 }

@@ -1,9 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { use, useContext } from 'react';
+import {  useContext } from 'react';
 import { cartContext } from '../../context/CartContext';
 import { Link } from 'react-router-dom';
 import useAllProducts from '../../customHooks/useAllProducts';
+import Spinner from '../Spinner/Spinner';
 
 export default function Products() {
   const productQuery = useAllProducts();
@@ -30,7 +29,7 @@ export default function Products() {
 
   return (
     <>
-      
+
       <div className="container mx-auto mb-50 mt-15">
         <h1 className="text-2xl md:text-2xl lg:text-4xl font-bold">
           Show All Products
