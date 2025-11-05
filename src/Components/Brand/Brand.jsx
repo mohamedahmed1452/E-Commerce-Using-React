@@ -33,7 +33,7 @@ export default function Brand() {
     <div className="container mx-auto mb-50 mt-15">
       <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-5 relative ">
         {data?.map((brand) => (
-          <Link to={`/brandProducts/${brand._id}`} key={brand._id}>
+          <Link to={`/brandDetails/${brand._id}`} key={brand._id}>
             <div className="bg-lime-800 rounded-lg  group relative ">
               <img src={brand.image} alt={brand.name} />
               <div className="flex-col-reverse items-center justify-between ">

@@ -17,7 +17,7 @@ export default function Navbar() {
   }
   return (
     <>
-      <nav className="     bg-gray-300       sticky  w-full z-10 p-3  top-0 left-0 right-0 ">
+      <nav className=" bg-neutral-700      sticky  w-full z-10 p-3  top-0 left-0 right-0 ">
         <div className="container  mx-auto text-center flex  justify-between ">
           <div className="flex md:gap-5 md:ms-5">
             <button
@@ -27,13 +27,13 @@ export default function Navbar() {
               {isOpen ? <Menu size={24} /> : <Menu size={24} />}
             </button>
 
-            <Link to="">
-              <img src={FreshLogo} alt="Fresh Cart" />
+            <Link to="/home" className="me-5">
+              <img  src={FreshLogo} alt="Fresh Cart" />
             </Link>
 
             {userToken && (
               <ul
-                className={`flex flex-col items-start ps-10  md:flex-row md:items-center md:space-x-7 absolute md:static bg-gray-200 md:bg-transparent left-0 w-full md:w-auto top-12 md:top-auto transition-all duration-300 ease-in-out ${
+                className={`md:text-[18px] text-blue-50 flex flex-col items-start ps-10  md:flex-row md:items-center md:space-x-7 absolute md:static bg-gray-200 md:bg-transparent left-0 w-full md:w-auto top-12 md:top-auto transition-all duration-300 ease-in-out ${
                   isOpen
                     ? "opacity-100 visible"
                     : "opacity-0 invisible md:opacity-100 md:visible"
@@ -54,7 +54,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex gap-5 md:me-5">
-            <ul className="flex  gap-2 md:gap-5">
+            <ul className="flex  gap-2 md:gap-5 md:text-[18px] ">
               {userToken && (
                 <Link to="/cart">
                   <li className="relative">
@@ -83,7 +83,7 @@ export default function Navbar() {
             <ul className="flex  md:gap-4 ">
               {userToken ? (
                 <li>
-                  <span className="cursor-pointer" onClick={userLoggedOut}>
+                  <span className="cursor-pointer md:text-[18px] text-blue-50 " onClick={userLoggedOut}>
                     Logout
                   </span>
                 </li>

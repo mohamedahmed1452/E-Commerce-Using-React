@@ -1,19 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useContext } from 'react';
+import { use, useContext } from 'react';
 import { cartContext } from '../../context/CartContext';
 import { Link } from 'react-router-dom';
+import useAllProducts from '../../customHooks/useAllProducts';
 
 export default function Products() {
-  const dataQuery = useQuery({
-    queryKey: ['allProducts'],
-    queryFn: () =>
-      axios
-        .get('https://ecommerce.routemisr.com/api/v1/products')
-        .then((res) => res.data.data),
-  });
+  const productQuery = useAllProducts();
 
-  const { data, isError, isLoading } = dataQuery;
+  const { data, isError, isLoading } = productQuery;
 
   const { addProductToCart } = useContext(cartContext);
 

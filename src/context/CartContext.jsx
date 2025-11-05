@@ -2,7 +2,6 @@ import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { authContext } from "./AuthContext";
-import { useQuery } from "@tanstack/react-query";
 
 export const cartContext = createContext();
 
@@ -14,7 +13,6 @@ export default function CartContextProvider({ children }) {
   const [totalCartPrice, setTotalCartPrice] = useState(0);
   const [products, setProducts] = useState(null);
   const [cartId, setCartId] = useState(null);
-  const [allProducts, setallProducts] = useState(null);
 
 
   console.log("Cart Id", cartId);
