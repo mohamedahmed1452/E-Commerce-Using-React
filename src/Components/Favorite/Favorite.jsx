@@ -3,7 +3,7 @@ import { favoriteContext } from '../../context/FavoriteContext';
 import Spinner from '../Spinner/Spinner';
 
 export default function Favorite() {
-  const { favoriteItems } = useContext(favoriteContext);
+  const { favoriteItems,removeFromFavorite} = useContext(favoriteContext);
 
   if (!favoriteItems.products) {
     return (
@@ -17,7 +17,7 @@ export default function Favorite() {
   console.log(favoriteProducts.length);
 
   return (
-    <div className="h-[100vh]">
+    <div className="min-h-[100vh]">
       <div className=" mx-auto mt-3 flex  justify-center ">
         <div className="w-[90%] m-3  p-5 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-8 dark:bg-gray-800 dark:border-gray-700">
           <div className="flex items-center justify-between mb-4">
@@ -54,7 +54,7 @@ export default function Favorite() {
                     </div>
                         <div
                     onClick={() => {
-                      // removeCartItem(product.product._id);
+                       removeFromFavorite(product.product._id);
                     }}
                     className="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline"
                   >

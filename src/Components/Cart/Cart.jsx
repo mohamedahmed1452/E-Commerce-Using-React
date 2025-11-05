@@ -12,15 +12,17 @@ export default function Cart() {
   } = useContext(cartContext);
 
   return (
-    <div className="container mx-auto  h-[100vh]">
-      <h1 className="m-3 font-bold text-3xl">Cart Page</h1>
-      <div className="mt-5 m-4">
-        <p className="font-medium  text-2xl">
-          Total Cart Price : {totalCartPrice} EGP
-        </p>
-        <p className="font-medium  text-2xl">
-          Number Of Cart Items : {numberOfCartItems}
-        </p>
+    <div className="container mx-auto mb-5 min-h-[100vh]">
+      <div className="bg-lime-900">
+        <h1 className="m-3 font-bold text-3xl">Cart Page</h1>
+        <div className="mt-5 m-4">
+          <p className="font-medium  text-2xl">
+            Total Cart Price : {totalCartPrice} EGP
+          </p>
+          <p className="font-medium  text-2xl">
+            Number Of Cart Items : {numberOfCartItems}
+          </p>
+        </div>
       </div>
 
       <div className="relative  shadow-md sm:rounded-lg">

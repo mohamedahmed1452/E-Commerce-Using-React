@@ -1,18 +1,21 @@
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { cartContext } from '../../context/CartContext';
-import useAllProducts from '../../customHooks/useAllProducts';
-import CategoriesSlider from '../CategoriesSlider/CategoriesSlider';
-import HomeSlider from '../HomeSlider/HomeSlider';
-import Spinner from './../Spinner/Spinner';
-import { favoriteContext } from '../../context/FavoriteContext';
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { cartContext } from "../../context/CartContext";
+import useAllProducts from "../../customHooks/useAllProducts";
+import CategoriesSlider from "../CategoriesSlider/CategoriesSlider";
+import HomeSlider from "../HomeSlider/HomeSlider";
+import Spinner from "./../Spinner/Spinner";
+import { favoriteContext } from "../../context/FavoriteContext";
 
 export default function Home() {
   const productQuery = useAllProducts();
   const { data, isError, isLoading } = productQuery;
 
-  const { addProductToCart } = useContext(cartContext);
-  const { addProductToFavorite } = useContext(favoriteContext);
+  const { addProductToCart, removeCartItem, cartExists } =
+    useContext(cartContext);
+  const { addToFavorite, removeFromFavorite, isExistInFavorite } =
+    useContext(favoriteContext);
+
   if (isLoading) {
     return (
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
@@ -58,7 +61,7 @@ export default function Home() {
                 />
                 <div className="flex-col-reverse items-center justify-between ">
                   <h3 className="ps-3">
-                    {product.title.split(' ').slice(0, 2).join(' ')}
+                    {product.title.split(" ").slice(0, 2).join(" ")}
                   </h3>
                   <p className="ps-3">{product.category.name}</p>
                   <div className="flex justify-between p-3 text-[20px] gap-1">
@@ -82,20 +85,36 @@ export default function Home() {
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      addProductToCart(product.id);
+                      cartExists(product.id)
+                        ? removeCartItem(product.id)
+                        : addProductToCart(product.id);
                     }}
                     className="text-3xl absolute top-2 right-2 translate-x-[200%] group-hover:translate-x-0 transition-transform duration-600 ease-out delay-150"
                   >
-                    <i className="cursor-pointer text-lime-950 fa-solid fa-cart-shopping"></i>
+                    <i
+                      className={`cursor-pointer fa-solid fa-cart-shopping ${
+                        cartExists(product.id)
+                          ? "fa-solid text-lime-950"
+                          : "fa-regular text-gray-400"
+                      } transition-colors duration-300`}
+                    ></i>
                   </button>
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      addProductToFavorite(product.id);
+                      isExistInFavorite(product.id)
+                        ? removeFromFavorite(product.id)
+                        : addToFavorite(product.id);
                     }}
                     className="text-3xl absolute top-2 left-2 -translate-x-[200%] group-hover:translate-x-0 transition-transform duration-600 ease-out delay-150"
                   >
-                    <i className="cursor-pointer text-red-700 fa-solid fa-heart"></i>
+                    <i
+                      className={`cursor-pointer fa-heart ${
+                        isExistInFavorite(product.id)
+                          ? "fa-solid text-red-600"
+                          : "fa-regular text-gray-400"
+                      } transition-colors duration-300`}
+                    ></i>
                   </button>
                 </div>
               </div>
