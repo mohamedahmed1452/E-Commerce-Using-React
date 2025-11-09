@@ -11,139 +11,102 @@ export default function Cart() {
     products,
   } = useContext(cartContext);
 
+  if (products.length === 0) {
+    return (
+      <div className="flex flex-col justify-center items-center h-screen text-gray-700">
+        <h1 className="text-4xl font-bold mb-5">🛒 Your Cart is Empty</h1>
+        <Link
+          to="/products"
+          className="px-6 py-3 bg-lime-600 text-white rounded-lg hover:bg-lime-700 transition"
+        >
+          Shop Now
+        </Link>
+      </div>
+    );
+  }
+
   return (
-    <div className="container mx-auto mb-5 min-h-[100vh]">
-      <div className="bg-lime-900">
-        <h1 className="m-3 font-bold text-3xl">Cart Page</h1>
-        <div className="mt-5 m-4">
-          <p className="font-medium  text-2xl">
-            Total Cart Price : {totalCartPrice} EGP
-          </p>
-          <p className="font-medium  text-2xl">
-            Number Of Cart Items : {numberOfCartItems}
-          </p>
-        </div>
+    <div className="container mx-auto px-4 py-10 min-h-screen">
+      <h1 className="text-4xl font-bold text-center mb-10">🛒 My Cart</h1>
+
+      <div className="flex flex-col gap-6">
+        {products.map((product) => (
+          <div
+            key={product._id}
+            className="flex flex-col md:flex-row items-center bg-gray-800 dark:bg-gray-900 rounded-2xl shadow-xl p-5 hover:scale-105 transition-transform duration-300"
+          >
+            {/* Product Image */}
+            <div className="w-full md:w-1/4 flex justify-center mb-4 md:mb-0">
+              <img
+                src={product.product.imageCover}
+                alt={product.product.title}
+                className="rounded-full w-32 h-32 object-cover shadow-md"
+              />
+            </div>
+
+            {/* Product Info */}
+            <div className="w-full md:w-2/4 px-5 flex flex-col justify-between">
+              <h2 className="text-xl md:text-2xl font-bold text-white">
+                {product.product.title}
+              </h2>
+              <p className="text-gray-300 mt-2">
+                Brand: <span className="text-lime-400">{product.product.brand.name}</span>
+              </p>
+              <p className="text-gray-300">
+                Category: <span className="text-lime-400">{product.product.category.name}</span>
+              </p>
+
+              {/* Quantity Controls */}
+              <div className="flex items-center mt-4 gap-4">
+                <button
+                  onClick={() =>
+                    updateCartItem(product.product._id, product.count - 1)
+                  }
+                  className="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full text-white hover:bg-gray-600 transition"
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  value={product.count}
+                  readOnly
+                  className="w-12 text-center rounded-md bg-gray-900 text-white"
+                />
+                <button
+                  onClick={() =>
+                    updateCartItem(product.product._id, product.count + 1)
+                  }
+                  className="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full text-white hover:bg-gray-600 transition"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            {/* Price & Actions */}
+            <div className="w-full md:w-1/4 flex flex-col items-center justify-between mt-4 md:mt-0">
+              <p className="text-2xl font-bold text-lime-400 mb-4">{product.price} EGP</p>
+              <button
+                onClick={() => removeCartItem(product.product._id)}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition flex items-center gap-2"
+              >
+                <i className="fa-solid fa-trash"></i> Remove
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
 
-      <div className="relative  shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-16 py-3">
-                <span className="sr-only">Image</span>
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Product
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Qty
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Price
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {products?.map((product) => (
-              <tr
-                key={product._id}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-              >
-                <td className="p-4">
-                  <img
-                    src={product.product.imageCover}
-                    className="w-16 md:w-32 max-w-full max-h-full"
-                    alt={product.product.title}
-                  />
-                </td>
-                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                  {product.product.title}
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center">
-                    <button
-                      onClick={() => {
-                        updateCartItem(product.product._id, product.count - 1);
-                      }}
-                      className="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                      type="button"
-                    >
-                      <span className="sr-only">Quantity button</span>
-                      <svg
-                        className="w-3 h-3"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 18 2"
-                      >
-                        <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M1 1h16"
-                        />
-                      </svg>
-                    </button>
-                    <div>
-                      <input
-                        type="number"
-                        id="first_product"
-                        className="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder={product.count}
-                        required
-                      />
-                    </div>
-                    <button
-                      onClick={() => {
-                        updateCartItem(product.product._id, product.count + 1);
-                      }}
-                      className="inline-flex items-center justify-center h-6 w-6 p-1 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                      type="button"
-                    >
-                      <span className="sr-only">Quantity button</span>
-                      <svg
-                        className="w-3 h-3"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 18 18"
-                      >
-                        <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 1v16M1 9h16"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </td>
-                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white text-2xl">
-                  {product.price}EGP
-                </td>
-                <td className="px-6 py-4">
-                  <div
-                    onClick={() => {
-                      removeCartItem(product.product._id);
-                    }}
-                    className="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline"
-                  >
-                    <i className="text-2xl fa-solid fa-trash"></i>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <Link to="/checkout">
-          <button className="bg-green-950 p-5 m-auto mt-5 w-full text-white rounded-lg cursor-pointer text-2xl">
-            Proceed To Checkout
-          </button>
+      {/* Cart Summary */}
+      <div className="mt-10 flex flex-col md:flex-row justify-between items-center bg-gray-900 dark:bg-gray-800 p-6 rounded-2xl shadow-2xl">
+        <div className="text-white text-2xl font-semibold">
+          Total Items: {numberOfCartItems} | Total Price: {totalCartPrice} EGP
+        </div>
+        <Link
+          to="/checkout"
+          className="mt-4 md:mt-0 px-8 py-3 bg-lime-600 text-white rounded-xl text-xl font-bold hover:bg-lime-700 transition"
+        >
+          Proceed to Checkout
         </Link>
       </div>
     </div>

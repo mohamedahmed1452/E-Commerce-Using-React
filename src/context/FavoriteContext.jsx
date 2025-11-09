@@ -12,7 +12,7 @@ export default function FavoriteContextProvider({ children }) {
   function addToFavorite(productId) {
     axios
       .post(
-        'https://ecommerce.routemisr.com/api/v1/cart',
+        'https://ecommerce.routemisr.com/api/v1/wishlist',
         {
           productId,
         },
@@ -32,14 +32,14 @@ export default function FavoriteContextProvider({ children }) {
       });
   }
   function isExistInFavorite(productId) {
-    return favoriteItems.products?.some(
-      (item) => item.product._id === productId
+    return favoriteItems?.some(
+      (item) => item.id === productId
     );
   }
 
   function removeFromFavorite(productId) {
     axios
-      .delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {
+      .delete(`https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`, {
         headers: {
           token: userToken,
         },
@@ -59,13 +59,15 @@ export default function FavoriteContextProvider({ children }) {
 
   function getFavoriteItems() {
     axios
-      .get('https://ecommerce.routemisr.com/api/v1/cart', {
+      .get('https://ecommerce.routemisr.com/api/v1/wishlist', {
         headers: {
           token: userToken,
         },
       })
       .then((res) => {
-        setNumberOfFavoriteItems(res.data.data.products.length);
+        console.log(" res favorite items", res.data.data);
+        
+        setNumberOfFavoriteItems(res.data.data.length);
         setFavoriteItems(res.data.data);
       })
       .catch((err) => {
@@ -75,7 +77,6 @@ export default function FavoriteContextProvider({ children }) {
   useEffect(() => {
     if (userToken) {
       getFavoriteItems();
-      // console.log("noumberOfFavoriteItems", noumberOfFavoriteItems);
     }
   }, []);
 

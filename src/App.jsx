@@ -1,30 +1,31 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Offline } from 'react-detect-offline';
-import { Toaster } from 'react-hot-toast';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './App.css';
-import Brand from './Components/Brand/Brand';
-import BrandDetails from './Components/BrandDetails/BrandDetails';
-import Cart from './Components/Cart/Cart';
-import Category from './Components/Category/Category';
-import Checkout from './Components/Checkout/Checkout';
-import Favorite from './Components/Favorite/Favorite';
-import Home from './Components/Home/Home';
-import Layout from './Components/Layout/Layout';
-import Login from './Components/Login/Login';
-import NotFound from './Components/NotFound/NotFound';
-import Products from './Components/Product/Products';
-import ProductDetails from './Components/ProductDetails/ProductDetails';
-import ProtectedAuth from './Components/ProtectedAuth/ProtectedAuth';
-import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
-import Register from './Components/Register/Register';
-import AuthContextProvider from './context/AuthContext';
-import CartContextProvider from './context/CartContext';
-import FavoriteContextProvider from './context/FavoriteContext';
-import Orders from './Components/Orders/Orders';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Offline } from "react-detect-offline";
+import { Toaster } from "react-hot-toast";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./App.css";
+import Brand from "./Components/Brand/Brand";
+import BrandDetails from "./Components/BrandDetails/BrandDetails";
+import Cart from "./Components/Cart/Cart";
+import Category from "./Components/Category/Category";
+import Checkout from "./Components/Checkout/Checkout";
+import Favorite from "./Components/Favorite/Favorite";
+import Home from "./Components/Home/Home";
+import Layout from "./Components/Layout/Layout";
+import Login from "./Components/Login/Login";
+import NotFound from "./Components/NotFound/NotFound";
+import Products from "./Components/Product/Products";
+import ProductDetails from "./Components/ProductDetails/ProductDetails";
+import ProtectedAuth from "./Components/ProtectedAuth/ProtectedAuth";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import Register from "./Components/Register/Register";
+import AuthContextProvider from "./context/AuthContext";
+import CartContextProvider from "./context/CartContext";
+import FavoriteContextProvider from "./context/FavoriteContext";
+import Orders from "./Components/Orders/Orders";
+import SubCategory from "./Components/Category/SubCategory";
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Layout />,
     children: [
       {
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: 'home',
+        path: "home",
         element: (
           <ProtectedRoute>
             <Home />
@@ -45,7 +46,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'products',
+        path: "products",
         element: (
           <ProtectedRoute>
             <Products />
@@ -53,7 +54,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'productdetails/:id',
+        path: "productdetails/:id",
         element: (
           <ProtectedRoute>
             <ProductDetails />
@@ -61,7 +62,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'brandDetails/:id',
+        path: "brandDetails/:id",
         element: (
           <ProtectedRoute>
             <BrandDetails />
@@ -69,7 +70,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'brand',
+        path: "brand",
         element: (
           <ProtectedRoute>
             <Brand />
@@ -77,7 +78,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'allorders',
+        path: "allorders",
         element: (
           <ProtectedRoute>
             <Orders />
@@ -85,7 +86,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'category',
+        path: "category",
         element: (
           <ProtectedRoute>
             <Category />
@@ -93,7 +94,15 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'cart',
+        path: "subcategory/:id",
+        element: (
+          <ProtectedRoute>
+            <SubCategory />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "cart",
         element: (
           <ProtectedRoute>
             <Cart />
@@ -101,7 +110,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'favorites',
+        path: "favorites",
         element: (
           <ProtectedRoute>
             <Favorite />
@@ -109,7 +118,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'checkout',
+        path: "checkout",
         element: (
           <ProtectedRoute>
             <Checkout />
@@ -117,7 +126,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'register',
+        path: "register",
         element: (
           <ProtectedAuth>
             <Register />
@@ -125,7 +134,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'login',
+        path: "login",
         element: (
           <ProtectedAuth>
             <Login />
@@ -133,7 +142,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '*',
+        path: "*",
         element: <NotFound />,
       },
     ],

@@ -1,49 +1,74 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import Spinner from '../Spinner/Spinner';
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import Spinner from "../Spinner/Spinner";
 
 export default function Brand() {
-  const brandQuery = useQuery({
-    queryKey: ['brandData'],
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["brandData"],
     queryFn: () =>
       axios
-        .get('https://ecommerce.routemisr.com/api/v1/brands')
+        .get("https://ecommerce.routemisr.com/api/v1/brands")
         .then((res) => res.data.data),
-    staleTime: Infinity, // ✅ data is always "fresh"
-    cacheTime: Infinity, // ✅ never garbage-collect from cache
-    refetchOnMount: false, // ✅ don’t refetch when component mounts
-    refetchOnWindowFocus: false, // ✅ don’t refetch on window focus
-    refetchOnReconnect: false, // ✅ don’t refetch on network reconnect
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
-  const { data, isLoading, isError } = brandQuery;
 
   if (isLoading) {
     return (
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
+      <div className="flex justify-center items-center h-screen">
         <Spinner />
       </div>
     );
   }
+
   if (isError) {
     return (
-      <h1 className="text-center text-3xl text-red-500">
-        Something went wrong error fetching data 404
+      <h1 className="text-center text-3xl text-red-500 mt-10">
+        ❌ Something went wrong while fetching brand data.
       </h1>
     );
   }
 
   return (
-    <div className="container mx-auto mb-50 mt-15">
-      <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-7 relative ">
+    <div className="container mx-auto mt-10 mb-24 px-5">
+      {/* Header */}
+      <div className="text-center mb-10">
+        <h1 className="text-4xl font-extrabold text-lime-400 tracking-wide mb-2">
+          Explore Our Brands
+        </h1>
+        <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          Discover top global brands offering the best products and quality you can trust.
+        </p>
+      </div>
+
+      {/* Brand Grid */}
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {data?.map((brand) => (
-          <Link to={`/brandDetails/${brand._id}`} key={brand._id}>
-            <div className="bg-gray-400 rounded-lg group relative ">
-              <img className='w-full  h-full rounded-full' src={brand.image} alt={brand.name} />
-              <div className="ms-5 flex-col-reverse items-center justify-between text-2xl  mb-3 ">
-                <h3>{brand.name}</h3>
-                <p>{brand.slug}</p>
-              </div>
+          <Link
+            to={`/brandDetails/${brand._id}`}
+            key={brand._id}
+            className="group bg-gradient-to-b from-neutral-800 to-neutral-900 rounded-2xl p-6 hover:shadow-2xl hover:shadow-lime-500/20 transition-all duration-300 border border-neutral-700 hover:border-lime-400"
+          >
+            {/* Brand Image */}
+            <div className="relative overflow-hidden rounded-full w-48 h-48 mx-auto mb-6">
+              <img
+                src={brand.image}
+                alt={brand.name}
+                className="w-full h-full object-fill rounded-full group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-lime-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+            </div>
+
+            {/* Brand Info */}
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-white group-hover:text-lime-400 transition-colors duration-300">
+                {brand.name}
+              </h3>
+              <p className="text-gray-400 text-sm mt-1">{brand.slug}</p>
             </div>
           </Link>
         ))}

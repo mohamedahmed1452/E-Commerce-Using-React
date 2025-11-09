@@ -10,7 +10,7 @@ export default function CategoriesSlider() {
     slidesToShow: 6,
     slidesToScroll: 3,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 1000,
   };
 
   const { data, isLoading } = useCategories();

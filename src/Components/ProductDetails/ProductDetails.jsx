@@ -1,83 +1,100 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { SyncLoader } from "react-spinners";
 import { cartContext } from "../../context/CartContext";
+import Spinner from "../Spinner/Spinner";
 
 export default function ProductDetails() {
-  const res = useParams();
-
+  const { id } = useParams();
   const { addProductToCart } = useContext(cartContext);
 
-  function handleAddToCart() {
-    addProductToCart(res.id);
-  }
-
-  const dataQuery = useQuery({
-    queryKey: ["productDetails", res.id],
-    queryFn: () =>
-      axios
-        .get(`https://ecommerce.routemisr.com/api/v1/products/${res.id}`)
-        .then((res) => res.data.data),
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ["productDetails", id],
+    queryFn: async () => {
+      const res = await axios.get(
+        `https://ecommerce.routemisr.com/api/v1/products/${id}`
+      );
+      return res.data.data;
+    },
   });
-  const { data, isError, isLoading } = dataQuery;
-  const product = data;
 
   if (isLoading) {
     return (
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
-        <SyncLoader />
+      <div className="flex justify-center items-center  h-screen">
+        <Spinner />
       </div>
     );
   }
+
   if (isError) {
     return (
-      <h1 className="text-center text-3xl text-red-500">
-        Something went wrong error fetching data 404
-      </h1>
+      <div className="text-center text-2xl text-red-600 mt-20">
+        ⚠️ Something went wrong — unable to fetch product details.
+      </div>
     );
   }
 
+  const product = data;
+
   return (
-    <>
-      <div
-        key={product.id}
-        className="flex flex-col md:flex-row justify-around items-center 
-             max-w-7xl mx-auto p-5 md:p-10 
-             mb-40 mt-6 bg-white rounded-xl shadow-md "
-      >
-        <div className="w-full md:w-1/4 mb-6 md:mb-0">
+    <div className="max-w-6xl mx-auto mt-12 mb-32 px-5 md:px-10 min-h-[100vh]">
+      <div className="flex flex-col md:flex-row items-start gap-10 bg-neutral-800 rounded-2xl shadow-lg p-6 md:p-10 transition-all duration-300 hover:shadow-2xl">
+        {/* Image Section */}
+        <div className="w-full md:w-1/3 flex justify-center">
           <img
-            className="rounded-md w-full h-full "
             src={product.imageCover}
             alt={product.title}
+            className="rounded-xl w-full max-w-sm object-cover shadow-md hover:scale-105 transition-transform duration-300"
           />
         </div>
 
-        {/* Product Info */}
-        <div className="w-full md:w-3/4 md:pl-10 flex flex-col justify-between">
-          <h1 className="font-bold text-xl md:text-2xl mb-3">
+        {/* Info Section */}
+        <div className="w-full md:w-2/3 text-gray-100 flex flex-col gap-4">
+          <h1 className="text-3xl font-extrabold text-white leading-tight">
             {product.title}
           </h1>
-          <p className="text-gray-700 mb-4">{product.description}</p>
-          <p className="text-sm text-gray-500 mb-4">{product.category.name}</p>
 
-          <div className="flex justify-between items-center mb-4">
-            <p className="font-semibold text-lg">${product.price}</p>
-            <p className="text-yellow-500 font-medium">
-              ⭐ {product.ratingsAverage}
+          <p className="text-gray-400 text-base leading-relaxed">
+            {product.description}
+          </p>
+
+          <p className="text-sm text-lime-400 uppercase tracking-wide font-semibold">
+            {product.category.name}
+          </p>
+
+          {/* Price and Rating */}
+          <div className="flex justify-between items-center mt-3">
+            {product.priceAfterDiscount ? (
+              <div className="flex items-baseline gap-3">
+                <span className="text-red-500 line-through text-lg">
+                  {product.price} EGP
+                </span>
+                <span className="text-2xl font-bold text-lime-400">
+                  {product.priceAfterDiscount} EGP
+                </span>
+              </div>
+            ) : (
+              <p className="text-2xl font-bold text-lime-400">
+                {product.price} EGP
+              </p>
+            )}
+
+            <p className="flex items-center text-yellow-400 font-semibold">
+              <i className="fa-solid fa-star mr-1"></i>
+              {product.ratingsAverage}
             </p>
           </div>
 
+          {/* Add to Cart Button */}
           <button
-            onClick={handleAddToCart}
-            className="bg-lime-600 hover:bg-lime-700 text-white font-semibold py-2 rounded-lg w-full"
+            onClick={() => addProductToCart(product.id)}
+            className="mt-6 bg-lime-500 hover:bg-lime-600 active:scale-95 transition-transform duration-150 text-white font-semibold py-3 px-5 rounded-lg shadow-md w-full md:w-auto"
           >
-            +Add To Cart
+            <i className="fa-solid fa-cart-plus mr-2"></i> Add to Cart
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -5,6 +5,7 @@ import img2 from "../../assets/img/slider-image-2.jpeg";
 import img3 from "../../assets/img/slider-image-3.jpeg";
 import img4 from "../../assets/img/slider-2.jpeg";
 
+
 export default function HomeSlider() {
   var settings = {
     dots: true,
@@ -13,7 +14,9 @@ export default function HomeSlider() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 1000,
+    
+    
   };
   return (
     <div className="flex mb-5 mt-5 ">
@@ -36,7 +39,7 @@ export default function HomeSlider() {
 
       <div className="w-1/4 flex flex-col ">
         <img className="w-full h-60 " src={img3} alt="" />
-        <img className="w-full h-60 " src={img4} alt="" />
+        <img className="w-full h-60 " src={img2} alt="" />
       </div>
     </div>
   );

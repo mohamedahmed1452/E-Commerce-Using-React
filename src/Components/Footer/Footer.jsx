@@ -1,11 +1,46 @@
-import React from "react";
+// import React from "react";
 
 export default function Footer() {
   return (
-    <div>
-      <footer className="bg-neutral-700 text-center mt-auto   w-full  py-4 ">
-        <p>&copy; 2024 Fresh Cart. All rights reserved.</p>
-      </footer>
-    </div>
+    <footer className="bg-neutral-900 text-gray-300 py-8 mt-auto">
+      <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        {/* Left section */}
+        <div className="text-center md:text-left">
+          <h2 className="text-xl font-semibold text-white tracking-wide">FreshCart</h2>
+          <p className="text-sm text-gray-400 mt-1">
+            © {new Date().getFullYear()} FreshCart. All rights reserved.
+          </p>
+        </div>
+
+        {/* Center - Navigation */}
+        <div className="flex flex-wrap justify-center gap-6 text-sm">
+          <a href="/about" className="hover:text-white transition-colors">About</a>
+          <a href="/products" className="hover:text-white transition-colors">Products</a>
+          <a href="/contact" className="hover:text-white transition-colors">Contact</a>
+          <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
+        </div>
+
+        {/* Right - Social Icons */}
+        <div className="flex justify-center md:justify-end gap-5 text-xl">
+          <a href="https://facebook.com" target="_blank" rel="noreferrer" className="hover:text-blue-500 transition-colors">
+            <i className="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-sky-400 transition-colors">
+            <i className="fa-brands fa-twitter"></i>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-pink-500 transition-colors">
+            <i className="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-gray-100 transition-colors">
+            <i className="fa-brands fa-github"></i>
+          </a>
+        </div>
+      </div>
+
+      {/* Bottom border */}
+      <div className="border-t border-gray-700 mt-6 pt-4 text-sm text-gray-500 text-center">
+        Built with ❤️ by FreshCart Team
+      </div>
+    </footer>
   );
 }

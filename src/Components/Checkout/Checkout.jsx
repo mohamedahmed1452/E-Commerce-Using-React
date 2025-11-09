@@ -86,7 +86,7 @@ export default function Checkout() {
   });
 
   return (
-    <div className="container mx-auto p-5 bg-blend-darkening">
+    <div className="min-h-[100vh] container mx-auto p-5 bg-blend-darkening">
       <h1 className="text-center text-3xl font-bold">Checkout Page</h1>
 
       <form onSubmit={formObj.handleSubmit} className="max-w-sm mx-auto">
