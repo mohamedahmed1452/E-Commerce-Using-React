@@ -4,11 +4,14 @@ import { cartContext } from "../../context/CartContext";
 import { authContext } from "../../context/AuthContext";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Navigate, useNavigate } from "react-router-dom";
+
 
 export default function Checkout() {
   const {userToken} = useContext(authContext);
   const { cartId,resetValues } = useContext(cartContext);
   const [isCash, setIsCash] = useState(true);
+  const navigate = useNavigate();
 
 
   function orderCash(shippingAddress) {
@@ -29,9 +32,13 @@ export default function Checkout() {
             position: "top-center",
           });
           resetValues();
+          setTimeout(() => {
+            navigate("/home");
+          }
+          , 1000);
         }
       })
-      .catch(()=> {      
+      .catch(()=> {
         toast.error("Failed at Checkout ", {
           duration: 1000,
           position: "top-center",
@@ -48,18 +55,14 @@ export default function Checkout() {
             token: userToken,
           },
           params: {
-            url: "http://localhost:5173/",
+            url: "http://localhost:5173",
           },
         }
       )
       .then((res) => {
-        if (res.data.status === "success") {
-          toast.success("Checkout initiated successfully!", {
-            duration: 1000,
-            position: "top-center",
-          });
+
           window.open(res.data.session.url, "_self");
-        }
+
       })
       .catch(() => {
         toast.error("Failed to initiate checkout.", {

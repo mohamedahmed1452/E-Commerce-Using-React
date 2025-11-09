@@ -1,7 +1,7 @@
-import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import { authContext } from "./AuthContext";
+import axios from 'axios';
+import { createContext, useContext, useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { authContext } from './AuthContext';
 
 export const cartContext = createContext();
 
@@ -12,9 +12,9 @@ export default function CartContextProvider({ children }) {
   const [products, setProducts] = useState(null);
   const [cartId, setCartId] = useState(null);
 
-  console.log("Cart Id", cartId);
-  console.log("products", products);
-  console.log("totalCartPrice", totalCartPrice);
+  // console.log("Cart Id", cartId);
+  // console.log("products", products);
+  // console.log("totalCartPrice", totalCartPrice);
 
   const numberOfCartItems = products ? products.length : 0;
 
@@ -24,15 +24,15 @@ export default function CartContextProvider({ children }) {
     }
   }, []);
 
-function resetValues(){
-  setTotalCartPrice(0);
-  setProducts(null);
-  setCartId(null);
-}
+  function resetValues() {
+    setTotalCartPrice(0);
+    setProducts(null);
+    setCartId(null);
+  }
 
   function getUserCart() {
     axios
-      .get("https://ecommerce.routemisr.com/api/v1/cart", {
+      .get('https://ecommerce.routemisr.com/api/v1/cart', {
         headers: {
           token: userToken,
         },
@@ -51,7 +51,7 @@ function resetValues(){
   function addProductToCart(productId) {
     axios
       .post(
-        "https://ecommerce.routemisr.com/api/v1/cart",
+        'https://ecommerce.routemisr.com/api/v1/cart',
         {
           productId,
         },
@@ -62,9 +62,9 @@ function resetValues(){
         }
       )
       .then(() => {
-        toast.success("Product added to cart successfully!", {
+        toast.success('Product added to cart successfully!', {
           duration: 1000,
-          position: "top-center",
+          position: 'top-center',
         });
         getUserCart();
       });
@@ -99,18 +99,16 @@ function resetValues(){
       .then((res) => {
         setTotalCartPrice(res.data.data.totalCartPrice);
         setProducts(res.data.data.products);
-        toast.success("Product removed from cart successfully!", {
+        toast.success('Product removed from cart successfully!', {
           duration: 1000,
-          position: "top-center",
+          position: 'top-center',
           style: {
-            background: "#f87171", // Tailwind's red-400
-            color: "#fff",
+            background: '#f87171', // Tailwind's red-400
+            color: '#fff',
           },
         });
       });
   }
-
-
 
   return (
     <cartContext.Provider
@@ -127,7 +125,7 @@ function resetValues(){
         numberOfCartItems,
         totalCartPrice,
         products,
-        cartId, 
+        cartId,
       }}
     >
       <Toaster />

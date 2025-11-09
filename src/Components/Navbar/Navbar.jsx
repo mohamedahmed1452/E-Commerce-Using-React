@@ -51,6 +51,9 @@ export default function Navbar() {
                 <li>
                   <NavLink to="/category">Categories</NavLink>
                 </li>
+                <li>
+                  <NavLink to="/allorders">My Orders</NavLink>
+                </li>
               </ul>
             )}
           </div>

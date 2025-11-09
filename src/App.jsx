@@ -21,6 +21,7 @@ import Register from './Components/Register/Register';
 import AuthContextProvider from './context/AuthContext';
 import CartContextProvider from './context/CartContext';
 import FavoriteContextProvider from './context/FavoriteContext';
+import Orders from './Components/Orders/Orders';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -72,6 +73,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Brand />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'allorders',
+        element: (
+          <ProtectedRoute>
+            <Orders />
           </ProtectedRoute>
         ),
       },

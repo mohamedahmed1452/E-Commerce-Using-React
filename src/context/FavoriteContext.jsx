@@ -1,7 +1,7 @@
-import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
-import { authContext } from "./AuthContext";
-import toast from "react-hot-toast";
+import axios from 'axios';
+import { createContext, useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { authContext } from './AuthContext';
 
 export const favoriteContext = createContext();
 export default function FavoriteContextProvider({ children }) {
@@ -12,7 +12,7 @@ export default function FavoriteContextProvider({ children }) {
   function addToFavorite(productId) {
     axios
       .post(
-        "https://ecommerce.routemisr.com/api/v1/cart",
+        'https://ecommerce.routemisr.com/api/v1/cart',
         {
           productId,
         },
@@ -23,9 +23,9 @@ export default function FavoriteContextProvider({ children }) {
         }
       )
       .then(() => {
-        toast.success("Product added to favorites successfully!", {
+        toast.success('Product added to favorites successfully!', {
           duration: 1000,
-          position: "top-center",
+          position: 'top-center',
         });
 
         getFavoriteItems();
@@ -45,12 +45,12 @@ export default function FavoriteContextProvider({ children }) {
         },
       })
       .then(() => {
-        toast.success("Product removed from favorites successfully!", {
+        toast.success('Product removed from favorites successfully!', {
           duration: 1000,
-          position: "top-center",
+          position: 'top-center',
           style: {
-            background: "#f87171", // Tailwind's red-400
-            color: "#fff",
+            background: '#f87171', // Tailwind's red-400
+            color: '#fff',
           },
         });
         getFavoriteItems();
@@ -59,7 +59,7 @@ export default function FavoriteContextProvider({ children }) {
 
   function getFavoriteItems() {
     axios
-      .get("https://ecommerce.routemisr.com/api/v1/cart", {
+      .get('https://ecommerce.routemisr.com/api/v1/cart', {
         headers: {
           token: userToken,
         },
@@ -69,13 +69,13 @@ export default function FavoriteContextProvider({ children }) {
         setFavoriteItems(res.data.data);
       })
       .catch((err) => {
-        console.log(err, "err in get favorite items");
+        console.log(err, 'err in get favorite items');
       });
   }
   useEffect(() => {
     if (userToken) {
       getFavoriteItems();
-      console.log("noumberOfFavoriteItems", noumberOfFavoriteItems);
+      // console.log("noumberOfFavoriteItems", noumberOfFavoriteItems);
     }
   }, []);
 

@@ -5,9 +5,15 @@ export const authContext = createContext();
 export default function AuthContextProvider({ children }) {
   const [userToken, setUserToken] = useState(() => localStorage.getItem("userToken"));
   const [userData, setUserData] = useState(() => {
+
     const token = localStorage.getItem('userToken');
     return token ? jwtDecode(token) : null;
   });
+
+
+
+
+
 
 
 
