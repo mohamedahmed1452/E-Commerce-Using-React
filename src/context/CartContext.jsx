@@ -13,6 +13,8 @@ export default function CartContextProvider({ children }) {
   const [cartId, setCartId] = useState(null);
 
   console.log("Cart Id", cartId);
+  console.log("products", products);
+  console.log("totalCartPrice", totalCartPrice);
 
   const numberOfCartItems = products ? products.length : 0;
 
@@ -20,7 +22,13 @@ export default function CartContextProvider({ children }) {
     if (userToken) {
       getUserCart();
     }
-  }, [userToken]);
+  }, []);
+
+function resetValues(){
+  setTotalCartPrice(0);
+  setProducts(null);
+  setCartId(null);
+}
 
   function getUserCart() {
     axios
@@ -76,7 +84,6 @@ export default function CartContextProvider({ children }) {
         }
       )
       .then((res) => {
-        // setNumberOfCartItems(res.data.numOfCartItems);
         setTotalCartPrice(res.data.data.totalCartPrice);
         setProducts(res.data.data.products);
       });
@@ -103,66 +110,7 @@ export default function CartContextProvider({ children }) {
       });
   }
 
-  function orderCash(shippingAddress) {
-    axios
-      .post(
-        `https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,
-        shippingAddress,
-        {
-          headers: {
-            token: userToken,
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data.status === "success") {
-          toast.success("Checkout initiated successfully!", {
-            duration: 1000,
-            position: "top-center",
-          });
 
-          setTotalCartPrice(0);
-          setProducts(null);
-          setCartId(null);
-        }
-      })
-      .catch(() => {
-        toast.success("", {
-          duration: 1000,
-          position: "top-center",
-        });
-      });
-  }
-  function orderCheckout(shippingAddress) {
-    axios
-      .post(
-        `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}`,
-        shippingAddress,
-        {
-          headers: {
-            token: userToken,
-          },
-          params: {
-            url: "http://localhost:5173/",
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data.status === "success") {
-          toast.success("Checkout initiated successfully!", {
-            duration: 1000,
-            position: "top-center",
-          });
-          window.open(res.data.session.url, "_self");
-        }
-      })
-      .catch(() => {
-        toast.error("Failed to initiate checkout.", {
-          duration: 1000,
-          position: "top-center",
-        });
-      });
-  }
 
   return (
     <cartContext.Provider
@@ -171,12 +119,15 @@ export default function CartContextProvider({ children }) {
         getUserCart,
         updateCartItem,
         removeCartItem,
-        orderCheckout,
-        orderCash,
+        cartExists,
+        setCartId,
+        setTotalCartPrice,
+        setProducts,
+        resetValues,
         numberOfCartItems,
         totalCartPrice,
         products,
-        cartExists,
+        cartId, 
       }}
     >
       <Toaster />

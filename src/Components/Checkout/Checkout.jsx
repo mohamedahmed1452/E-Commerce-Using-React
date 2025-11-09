@@ -1,10 +1,76 @@
 import { useFormik } from "formik";
 import { useContext, useState } from "react";
 import { cartContext } from "../../context/CartContext";
+import { authContext } from "../../context/AuthContext";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function Checkout() {
-  const { orderCheckout, orderCash } = useContext(cartContext);
+  const {userToken} = useContext(authContext);
+  const { cartId,resetValues } = useContext(cartContext);
   const [isCash, setIsCash] = useState(true);
+
+
+  function orderCash(shippingAddress) {
+    axios
+      .post(
+        `https://ecommerce.routemisr.com/api/v1/orders/${cartId}`,
+        shippingAddress,
+        {
+          headers: {
+            token: userToken,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.status === "success") {
+          toast.success("Checkout initiated successfully!", {
+            duration: 1000,
+            position: "top-center",
+          });
+          resetValues();
+        }
+      })
+      .catch(()=> {      
+        toast.error("Failed at Checkout ", {
+          duration: 1000,
+          position: "top-center",
+        });
+      });
+  }
+  function orderCheckout(shippingAddress) {
+    axios
+      .post(
+        `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}`,
+        shippingAddress,
+        {
+          headers: {
+            token: userToken,
+          },
+          params: {
+            url: "http://localhost:5173/",
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.status === "success") {
+          toast.success("Checkout initiated successfully!", {
+            duration: 1000,
+            position: "top-center",
+          });
+          window.open(res.data.session.url, "_self");
+        }
+      })
+      .catch(() => {
+        toast.error("Failed to initiate checkout.", {
+          duration: 1000,
+          position: "top-center",
+        });
+      });
+  }
+
+
+
   const formObj = useFormik({
     initialValues: {
       details: "",

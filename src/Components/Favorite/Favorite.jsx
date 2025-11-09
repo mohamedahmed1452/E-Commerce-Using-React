@@ -14,7 +14,6 @@ export default function Favorite() {
   }
 
   const favoriteProducts = favoriteItems.products;
-  console.log(favoriteProducts.length);
 
   return (
     <div className="min-h-[100vh]">
