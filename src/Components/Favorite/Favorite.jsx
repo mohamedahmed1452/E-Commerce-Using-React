@@ -5,9 +5,6 @@ import Spinner from "../Spinner/Spinner";
 export default function Favorite() {
   const { favoriteItems, removeFromFavorite } = useContext(favoriteContext);
 
-  
-  
-
   if (!favoriteItems) {
     return (
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -16,11 +13,9 @@ export default function Favorite() {
     );
   }
 
-
-
   if (favoriteItems.length === 0) {
     return (
-      <div className="flex flex-col justify-center items-center h-screen text-gray-700">
+      <div className="flex flex-col justify-center items-center min-h-screen bg-white text-gray-700">
         <h1 className="text-4xl font-bold mb-5">💔 No Favorites Yet!</h1>
         <p className="text-gray-500">Start adding your favorite products now.</p>
       </div>
@@ -28,9 +23,9 @@ export default function Favorite() {
   }
 
   return (
-    <div className="min-h-[100vh] py-10 bg-gray-100 dark:bg-gray-900">
+    <div className="min-h-[100vh] py-10 bg-white">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center text-gray-900 dark:text-white mb-10">
+        <h1 className="text-4xl font-bold text-center text-blue-700 mb-10">
           ❤️ My Favorite Products
         </h1>
 
@@ -38,7 +33,7 @@ export default function Favorite() {
           {favoriteItems.map((product) => (
             <div
               key={product.id}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5 flex flex-col items-center hover:scale-105 transition-transform duration-300"
+              className="bg-white rounded-2xl shadow-lg p-5 flex flex-col items-center hover:scale-105 transition-transform duration-300"
             >
               {/* Product Image */}
               <div className="w-40 h-40 mb-4">
@@ -50,15 +45,15 @@ export default function Favorite() {
               </div>
 
               {/* Product Info */}
-              <h2 className="text-xl w-full font-bold text-gray-900 dark:text-white text-center truncate">
+              <h2 className="text-xl w-full font-bold text-gray-900 text-center truncate">
                 {product.title}
               </h2>
-              <p className="text-gray-500 dark:text-gray-400 mt-1 text-center">
+              <p className="text-gray-500 mt-1 text-center">
                 {product.category.name}
               </p>
 
               {/* Price */}
-              <p className="text-2xl font-semibold text-lime-500 mt-2">
+              <p className="text-2xl font-semibold text-blue-700 mt-2">
                 {product.price} EGP
               </p>
 

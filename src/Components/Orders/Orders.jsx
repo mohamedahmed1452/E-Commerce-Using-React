@@ -34,6 +34,17 @@ export default function Orders() {
       </h1>
     );
 
+  if (!data || data.length === 0) {
+    return (
+      <div className="flex flex-col justify-center items-center min-h-screen bg-white text-gray-700">
+        <h1 className="text-4xl font-bold mb-5">🛒 No Orders Yet!</h1>
+        <p className="text-gray-500">
+          You haven’t placed any orders. Start shopping now!
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto mt-10 mb-24 px-5">
       <h1 className="text-4xl font-extrabold text-lime-400 text-center mb-10">
@@ -64,10 +75,18 @@ export default function Orders() {
                     <p className="text-white font-semibold text-center text-sm md:text-base">
                       {item.product.title.split(" ").slice(0, 2).join(" ")}
                     </p>
-                    <p className="text-gray-400 text-xs md:text-sm">{item.product.brand.name}</p>
-                    <p className="text-gray-400 text-xs md:text-sm">{item.product.category.name}</p>
-                    <p className="text-gray-300 font-medium mt-1">Count: {item.count}</p>
-                    <p className="text-lime-400 font-bold">Price: {item.price} EGP</p>
+                    <p className="text-gray-400 text-xs md:text-sm">
+                      {item.product.brand.name}
+                    </p>
+                    <p className="text-gray-400 text-xs md:text-sm">
+                      {item.product.category.name}
+                    </p>
+                    <p className="text-gray-300 font-medium mt-1">
+                      Count: {item.count}
+                    </p>
+                    <p className="text-lime-400 font-bold">
+                      Price: {item.price} EGP
+                    </p>
                   </div>
                 ))}
               </div>
@@ -81,29 +100,33 @@ export default function Orders() {
                 <div className="space-y-3 text-gray-700">
                   <div className="flex justify-between">
                     <span className="font-medium">Items:</span>
-                    <span className="text-gray-900">{order.cartItems.length}</span>
+                    <span className="text-gray-900">
+                      {order.cartItems.length}
+                    </span>
                   </div>
 
                   <div className="flex justify-between">
                     <span className="font-medium">Shipping:</span>
-                    <span>{order.shippingPrice} EGP</span>
+                    <span>{order.shippingPrice + 10} EGP</span>
                   </div>
 
                   <div className="flex justify-between">
                     <span className="font-medium">Tax:</span>
-                    <span>{order.taxPrice} EGP</span>
+                    <span>{order.taxPrice + 5} EGP</span>
                   </div>
 
                   <div className="flex justify-between border-t border-gray-200 pt-3">
                     <span className="font-semibold text-lg">Total:</span>
                     <span className="font-bold text-lg text-green-600">
-                      {order.totalOrderPrice} EGP
+                      {order.totalOrderPrice + 10 + 5} EGP
                     </span>
                   </div>
 
                   <div className="flex justify-between">
                     <span className="font-medium">Payment:</span>
-                    <span className="capitalize">{order.paymentMethodType}</span>
+                    <span className="capitalize">
+                      {order.paymentMethodType}
+                    </span>
                   </div>
 
                   <div className="flex justify-between items-center">

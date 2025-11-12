@@ -1,11 +1,11 @@
-import { Heart, ShoppingCart, Star } from 'lucide-react';
-import { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { cartContext } from '../../context/CartContext';
-import { favoriteContext } from '../../context/FavoriteContext';
-import useAllProducts from '../../customHooks/useAllProducts';
-import useCategories from '../../customHooks/useCategories';
-import Spinner from '../Spinner/Spinner';
+import { Heart, ShoppingCart, Star } from "lucide-react";
+import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { cartContext } from "../../context/CartContext";
+import { favoriteContext } from "../../context/FavoriteContext";
+import useAllProducts from "../../customHooks/useAllProducts";
+import useCategories from "../../customHooks/useCategories";
+import Spinner from "../Spinner/Spinner";
 
 export default function Products() {
   const productQuery = useAllProducts();
@@ -14,14 +14,14 @@ export default function Products() {
 
   const handleCategory = (e) => {
     const selectedCategory = e.target.value;
-    if (selectedCategory === 'all') {
+    if (selectedCategory === "all") {
       setProducts(data);
     } else {
       const filteredProducts = data.filter(
         (product) => product.category.name.toLowerCase() === selectedCategory
       );
       setProducts(filteredProducts);
-      console.log('Filtered Products:', filteredProducts);
+      console.log("Filtered Products:", filteredProducts);
     }
   };
 
@@ -31,13 +31,10 @@ export default function Products() {
       product.title.toLowerCase().includes(searchTerm)
     );
     setProducts(filteredProducts);
-  }
+  };
   useEffect(() => {
-
-  if (data) setProducts(data);
-  },[data]);
-
-
+    if (data) setProducts(data);
+  }, [data]);
 
   const { addProductToCart, removeCartItem, cartExists } =
     useContext(cartContext);
@@ -48,7 +45,7 @@ export default function Products() {
 
   if (isLoading)
     return (
-      <div className="flex justify-center items-center h-screen" >
+      <div className="flex justify-center items-center h-screen">
         <Spinner />
       </div>
     );
@@ -61,6 +58,7 @@ export default function Products() {
     );
 
 
+
   return (
     <section className="container mx-auto px-4 py-10  min-h-[100vh]">
       <h1 className="text-3xl md:text-4xl font-bold mb-8 text-gray-800 text-center">
@@ -68,14 +66,12 @@ export default function Products() {
       </h1>
 
       <div className="w-full max-w-3xl mx-auto mb-10 flex items-center gap-4 bg-white p-4 rounded-2xl shadow-md transition-all hover:shadow-lg">
-        {/* Search Input */}
         <div className="relative flex-1">
           <input
             type="text"
             placeholder="Search for products..."
             className="w-full h-12 pl-10 pr-4 rounded-xl border border-gray-300 focus:border-lime-500 focus:ring-2 focus:ring-lime-400 outline-none transition-all duration-200"
-            onChange={ handleSearch}
-
+            onChange={handleSearch}
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -92,23 +88,29 @@ export default function Products() {
             />
           </svg>
         </div>
-
-        {/* Category Dropdown */}
         <select
           name="category"
           id="category"
           className="h-12 w-48 rounded-xl border border-gray-300 bg-white text-gray-700 px-3 focus:border-lime-500 focus:ring-2 focus:ring-lime-400 outline-none transition-all duration-200 cursor-pointer"
           onChange={handleCategory}
         >
-          <option  value="all">All Categories</option>
+          <option value="all">All Categories</option>
           {categories?.map((category) => (
-
-            <option key={category._id } value={category.name.toLowerCase()}>
+            <option key={category._id} value={category.name.toLowerCase()}>
               {category.name}
             </option>
           ))}
         </select>
       </div>
+      {products.length === 0 ? (
+        <div className="flex flex-col justify-center items-center min-h-screen bg-white text-gray-700">
+          <h1 className="text-4xl font-bold mb-5">🔍 No Products Found!</h1>
+          <p className="text-gray-500">
+            We couldn't find any products matching your search. Try different
+            keywords.
+          </p>
+        </div>
+      ) : null}
 
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {products?.map((product) => {
@@ -143,8 +145,8 @@ export default function Products() {
                     size={22}
                     className={
                       inFavorite
-                        ? 'text-red-600 fill-red-600'
-                        : 'text-gray-400 hover:text-red-500'
+                        ? "text-red-600 fill-red-600"
+                        : "text-gray-400 hover:text-red-500"
                     }
                   />
                 </button>
@@ -163,8 +165,8 @@ export default function Products() {
                     size={22}
                     className={
                       inCart
-                        ? 'text-emerald-600 fill-emerald-600'
-                        : 'text-gray-400 hover:text-emerald-500'
+                        ? "text-emerald-600 fill-emerald-600"
+                        : "text-gray-400 hover:text-emerald-500"
                     }
                   />
                 </button>
@@ -174,7 +176,7 @@ export default function Products() {
               <div className="p-4 flex flex-col justify-between h-40">
                 <div>
                   <h3 className="font-semibold text-gray-800 text-lg truncate">
-                    {product.title.split(' ').slice(0, 3).join(' ')}
+                    {product.title.split(" ").slice(0, 3).join(" ")}
                   </h3>
                   <p className="text-sm text-gray-500">
                     {product.category.name}
