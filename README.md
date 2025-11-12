@@ -45,7 +45,6 @@ npm run preview
 ## Demo
 
 [Live Demo](https://e-commerce-using-react-taupe.vercel.app)  
-Replace the link above with your real demo URL.
 
 ## Where to look in the code
 
