@@ -44,7 +44,7 @@ npm run preview
 
 ## Demo
 
-Live demo: https://web-app-e-commerce.netlify.app/login
+Live demo:e-commerce-using-react-taupe.vercel.app
 Replace the link above with your real demo URL.
 
 ## Where to look in the code
