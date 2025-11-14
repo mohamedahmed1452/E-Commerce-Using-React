@@ -46,7 +46,7 @@ export default function Orders() {
   }
 
   return (
-    <div className="container mx-auto mt-10 mb-24 px-5">
+    <div className="min-h-[80vh] container mx-auto mt-10 mb-24 px-5">
       <h1 className="text-4xl font-extrabold text-lime-400 text-center mb-10">
         🛒 My Orders
       </h1>

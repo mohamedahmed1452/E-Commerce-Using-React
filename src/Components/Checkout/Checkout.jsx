@@ -55,7 +55,7 @@ export default function Checkout() {
             token: userToken,
           },
           params: {
-            url: "http://localhost:5173",
+            url: "https://e-commerce-using-react-taupe.vercel.app/",
           },
         }
       )

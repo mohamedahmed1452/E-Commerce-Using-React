@@ -11,9 +11,9 @@ export default function Cart() {
     products,
   } = useContext(cartContext);
 
-  if (products.length === 0) {
+  if (products==null || products?.length === 0) {
     return (
-      <div className="flex flex-col justify-center items-center h-screen text-gray-700">
+      <div className="flex flex-col justify-center items-center min-h-[75vh] text-gray-700">
         <h1 className="text-4xl font-bold mb-5">🛒 Your Cart is Empty</h1>
         <Link
           to="/products"
@@ -26,11 +26,11 @@ export default function Cart() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-10 min-h-screen">
+    <div className="container mx-auto px-4 py-10 min-h-[75vh]">
       <h1 className="text-4xl font-bold text-center mb-10">🛒 My Cart</h1>
 
       <div className="flex flex-col gap-6">
-        {products.map((product) => (
+        {products?.map((product) => (
           <div
             key={product._id}
             className="flex flex-col md:flex-row items-center bg-gray-800 dark:bg-gray-900 rounded-2xl shadow-xl p-5 hover:scale-105 transition-transform duration-300"

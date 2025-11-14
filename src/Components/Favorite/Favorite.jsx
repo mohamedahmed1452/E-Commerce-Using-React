@@ -13,9 +13,9 @@ export default function Favorite() {
     );
   }
 
-  if (favoriteItems.length === 0) {
+   if (favoriteItems.length === 0) {
     return (
-      <div className="flex flex-col justify-center items-center min-h-screen bg-white text-gray-700">
+      <div className="flex flex-col justify-center items-center min-h-[75vh] bg-white text-gray-700">
         <h1 className="text-4xl font-bold mb-5">💔 No Favorites Yet!</h1>
         <p className="text-gray-500">Start adding your favorite products now.</p>
       </div>
@@ -23,7 +23,7 @@ export default function Favorite() {
   }
 
   return (
-    <div className="min-h-[100vh] py-10 bg-white">
+    <div className="min-h-[75vh] py-10 bg-white">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center text-blue-700 mb-10">
           ❤️ My Favorite Products

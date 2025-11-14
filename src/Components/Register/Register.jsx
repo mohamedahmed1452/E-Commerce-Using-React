@@ -64,7 +64,7 @@ export default function Register() {
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white p-4">
+    <div className="min-h-[75vh] flex items-center justify-center bg-white p-4">
       <div className="bg-white shadow-xl rounded-xl w-full max-w-md p-8 border border-gray-200">
         <h2 className="text-2xl font-bold text-center text-blue-700 mb-6">Register Now</h2>
 
@@ -81,7 +81,7 @@ export default function Register() {
           {["name", "email", "phone", "password", "rePassword"].map((field, idx) => (
             <div key={idx} className="relative">
               <input
-                type={field.includes("password") ? "password" : field === "phone" ? "tel" : "text"}
+                type={field.includes("word") ? "password" : field === "phone" ? "tel" : "text"}
                 name={field}
                 id={field}
                 value={formik.values[field]}
