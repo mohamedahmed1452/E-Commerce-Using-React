@@ -28,7 +28,7 @@ export default function Home() {
   if (isError)
     return (
       <h1 className="text-center text-3xl text-red-500 font-semibold mt-10">
-        ❌ Error fetching products. Please try again later.
+         Error fetching products. Please try again later.
       </h1>
     );
 
@@ -48,7 +48,7 @@ export default function Home() {
       <section className="container mx-auto px-4 py-12">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
-            🔥 Popular Products
+            Popular Products
           </h1>
           <Link
             to="/products"

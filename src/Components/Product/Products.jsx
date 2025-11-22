@@ -53,7 +53,7 @@ export default function Products() {
   if (isError)
     return (
       <h1 className="text-center text-3xl text-red-500 font-semibold mt-10">
-        ❌ Something went wrong — failed to fetch products.
+         Something went wrong — failed to fetch products.
       </h1>
     );
 

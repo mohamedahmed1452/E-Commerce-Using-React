@@ -59,18 +59,18 @@ export default function Login() {
     <div className=" flex items-center justify-center min-h-[75vh] bg-gradient-to-br from-lime-100 via-white to-blue-100 p-4">
       <div className="w-full max-w-md p-8 rounded-2xl shadow-2xl bg-white/80 backdrop-blur-lg border border-white/30">
         <h1 className="text-3xl font-bold text-center text-blue-700 mb-8">
-          Welcome Back 👋
+          Welcome Back
         </h1>
 
         {/* Alerts */}
         {errorMsg && (
           <div className="p-3 mb-4 text-sm text-red-800 rounded-lg bg-red-100 border border-red-300">
-            ⚠️ {errorMsg}
+             {errorMsg}
           </div>
         )}
         {successMsg && (
           <div className="p-3 mb-4 text-sm text-green-800 rounded-lg bg-green-100 border border-green-300">
-            ✅ {successMsg}
+             {successMsg}
           </div>
         )}
 

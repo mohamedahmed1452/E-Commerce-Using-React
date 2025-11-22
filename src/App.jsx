@@ -23,6 +23,9 @@ import CartContextProvider from "./context/CartContext";
 import FavoriteContextProvider from "./context/FavoriteContext";
 import Orders from "./Components/Orders/Orders";
 import SubCategory from "./Components/Category/SubCategory";
+import { Provider } from "react-redux";
+import { createdStore } from "./redux/reduxStore";
+import About from "./Components/About/About";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -42,6 +45,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Home />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "about",
+        element: (
+          <ProtectedRoute>
+            <About />
           </ProtectedRoute>
         ),
       },
@@ -155,6 +166,7 @@ export default function App() {
 
   return (
     <>
+    <Provider store={createdStore}>
       <QueryClientProvider client={queryClient}>
         <AuthContextProvider>
           <CartContextProvider>
@@ -169,6 +181,7 @@ export default function App() {
         <div className="bg-black p-5 fixed top-0 start-5 text-white"></div>
         You are currently offline.
       </Offline>
+      </Provider>
     </>
   );
 }
